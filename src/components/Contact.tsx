@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Section from "./Section";
-import { Mail, Linkedin, Github, Twitter } from "lucide-react";
+import { Mail, Linkedin, Github, Facebook, Instagram } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -24,7 +24,7 @@ export default function Contact() {
         </p>
 
         <a
-          href="mailto:user@example.com"
+          href="mailto:aabid.al.hossain@gmail.com"
           className="inline-block px-8 py-4 border border-green text-green font-mono rounded hover:bg-green/10 transition-colors mt-8"
         >
           Say Hello
@@ -32,25 +32,39 @@ export default function Contact() {
 
         <div className="flex justify-center gap-6 pt-12">
           <a
-            href="#"
+            href="https://github.com/Abid-Al-Hossain"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
           >
             <Github className="w-6 h-6" />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/abid-ahmed-5a1385234/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
           >
             <Linkedin className="w-6 h-6" />
           </a>
           <a
-            href="#"
+            href="https://www.facebook.com/swakkhar.abid"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
           >
-            <Twitter className="w-6 h-6" />
+            <Facebook className="w-6 h-6" />
           </a>
           <a
-            href="mailto:user@example.com"
+            href="https://www.instagram.com/procchod123/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+          >
+            <Instagram className="w-6 h-6" />
+          </a>
+          <a
+            href="mailto:aabid.al.hossain@gmail.com"
             className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
           >
             <Mail className="w-6 h-6" />
