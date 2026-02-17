@@ -68,9 +68,8 @@ export default function About() {
               src="/avatar.jpeg"
               alt="Swakkhar"
               fill
-              className="object-cover grayscale hover:grayscale-0 transition-all duration-300 pointer-events-none"
+              className="object-cover transition-all duration-300 pointer-events-none"
             />
-            <div className="absolute inset-0 bg-green/20 hover:bg-transparent transition-colors duration-300 pointer-events-none"></div>
           </div>
           <div className="absolute top-4 left-4 w-64 h-64 md:w-80 md:h-80 border-2 border-green rounded z-0 transition-transform duration-300 group-hover:translate-y-2 group-hover:translate-x-2"></div>
         </div>
