@@ -94,9 +94,9 @@ export default function Skills() {
             <motion.div
               key={skillGroup.category}
               variants={fadeInUp}
-              className="bg-navy-800 p-6 rounded-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-navy-700 hover:border-green/30 group"
+              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_20px_rgba(100,255,218,0.15)] hover:-translate-y-1 transition-all duration-300 border border-white/10 hover:border-green/40 group"
             >
-              <h3 className="text-xl font-bold text-slate-200 mb-4 group-hover:text-green transition-colors">
+              <h3 className="text-xl font-bold text-slate-100 mb-4 group-hover:text-green transition-colors">
                 {skillGroup.category}
               </h3>
               <ul className="space-y-2">

@@ -22,7 +22,7 @@ export default function Career() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-navy-800 p-8 rounded-lg border border-navy-700 space-y-6"
+            className="bg-navy-700/60 backdrop-blur-xl p-8 rounded-lg border border-white/10 hover:border-green/40 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all duration-300 group"
           >
             <div className="flex items-center gap-3 text-white text-xl font-bold">
               <Globe className="text-green" />
@@ -44,7 +44,7 @@ export default function Career() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-navy-700 text-green rounded-full text-xs font-mono border border-green/20"
+                  className="px-3 py-1 bg-navy-700/50 text-green rounded-full text-xs font-mono border border-green/20"
                 >
                   {tag}
                 </span>
@@ -63,7 +63,7 @@ export default function Career() {
               <Terminal className="text-green" />
               <h3>Engineering Mindset</h3>
             </div>
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {[
                 {
                   title: "Precision",
@@ -82,12 +82,14 @@ export default function Career() {
                   desc: "Writing maintainable, type-safe code with best practices.",
                 },
               ].map((item, i) => (
-                <li key={i} className="flex gap-4">
-                  <div className="min-w-[40px] h-[40px] bg-navy-800 rounded-full flex items-center justify-center text-green font-mono border border-navy-700">
+                <li key={i} className="flex gap-4 group">
+                  <div className="min-w-[40px] h-[40px] bg-navy-800/50 backdrop-blur-sm rounded-full flex items-center justify-center text-green font-mono border border-white/10 group-hover:border-green/50 transition-colors">
                     {i + 1}
                   </div>
                   <div>
-                    <h4 className="text-slate-200 font-bold">{item.title}</h4>
+                    <h4 className="text-slate-200 font-bold group-hover:text-green transition-colors">
+                      {item.title}
+                    </h4>
                     <p className="text-slate-400 text-sm">{item.desc}</p>
                   </div>
                 </li>

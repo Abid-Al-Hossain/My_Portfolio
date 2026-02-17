@@ -67,7 +67,7 @@ export default function Projects() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: index * 0.1,
               }}
-              className="bg-navy-800 p-6 rounded-lg border border-navy-700 hover:border-green/50 transition-all group hover:-translate-y-2"
+              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all group hover:-translate-y-2"
             >
               <div className="flex justify-between items-start mb-4">
                 <Folder className="w-10 h-10 text-green" />

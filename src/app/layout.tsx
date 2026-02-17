@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Fira_Code, Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const firaCode = Fira_Code({
   subsets: ["latin"],
+  variable: "--font-fira-code",
 });
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: "Swakkhar | Full Stack Developer",
   description:
-    "Portfolio of Abid Al Hossain (Swakkhar), a Full Stack Web Developer specializing in Next.js, React, and modern UI/UX.",
+    "Portfolio of Swakkhar, a Full Stack Developer specializing in Next.js, React, and Node.js",
 };
 
 export default function RootLayout({
@@ -24,9 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-navy-900 text-slate-300 selection:bg-green-300 selection:text-navy-900`}
+        className={`${inter.variable} ${firaCode.variable} ${outfit.variable} font-sans antialiased bg-navy-900 text-slate-300 selection:bg-green selection:text-navy-900`}
       >
         {children}
       </body>
