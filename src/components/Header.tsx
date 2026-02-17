@@ -51,7 +51,6 @@ export default function Header() {
                 href={link.href}
                 className="text-slate-400 hover:text-green text-sm font-mono transition-colors"
               >
-                <span className="text-green mr-1">0{i + 1}.</span>
                 {link.name}
               </a>
             </li>
@@ -87,7 +86,6 @@ export default function Header() {
                 onClick={() => setIsOpen(false)}
                 className="text-slate-200 hover:text-green text-lg font-mono"
               >
-                <span className="text-green mr-2">0{i + 1}.</span>
                 {link.name}
               </a>
             ))}

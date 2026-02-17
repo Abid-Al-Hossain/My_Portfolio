@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Section from "./Section";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const skills = [
   {
@@ -71,23 +72,28 @@ const skills = [
 export default function Skills() {
   return (
     <Section id="skills">
-      <div className="space-y-12">
-        <div className="flex items-center gap-4 mb-8">
+      <motion.div
+        variants={staggerContainer}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.1 }}
+        className="space-y-12"
+      >
+        <motion.div
+          variants={fadeInUp}
+          className="flex items-center gap-4 mb-8"
+        >
           <h2 className="text-3xl font-bold text-white flex items-center gap-2">
-            <span className="text-green font-mono text-2xl">02.</span> Skills &
-            Tech Stack
+            Skills & Tech Stack
           </h2>
           <div className="h-[1px] bg-navy-600 flex-grow max-w-xs"></div>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map((skillGroup, index) => (
             <motion.div
               key={skillGroup.category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              variants={fadeInUp}
               className="bg-navy-800 p-6 rounded-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-navy-700 hover:border-green/30 group"
             >
               <h3 className="text-xl font-bold text-slate-200 mb-4 group-hover:text-green transition-colors">
@@ -106,7 +112,7 @@ export default function Skills() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </Section>
   );
 }

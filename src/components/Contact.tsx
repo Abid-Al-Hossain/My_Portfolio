@@ -3,17 +3,19 @@
 import { motion } from "framer-motion";
 import Section from "./Section";
 import { Mail, Linkedin, Github, Facebook, Instagram } from "lucide-react";
+import { fadeInUp } from "@/lib/animations";
 
 export default function Contact() {
   return (
     <Section id="contact" className="min-h-[70vh] mb-20 text-center">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        variants={fadeInUp}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
         className="max-w-2xl mx-auto space-y-8"
       >
-        <p className="text-green font-mono">04. What’s Next?</p>
+        <p className="text-green font-mono">What’s Next?</p>
         <h2 className="text-4xl md:text-5xl font-bold text-slate-200">
           Get In Touch
         </h2>
