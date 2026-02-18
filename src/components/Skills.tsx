@@ -72,28 +72,18 @@ const skills = [
 export default function Skills() {
   return (
     <Section id="skills">
-      <motion.div
-        variants={staggerContainer}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.1 }}
-        className="space-y-12"
-      >
-        <motion.div
-          variants={fadeInUp}
-          className="flex items-center gap-4 mb-8"
-        >
+      <div className="space-y-12">
+        <div className="flex items-center gap-4 mb-8">
           <h2 className="text-3xl font-bold text-white flex items-center gap-2">
             Skills & Tech Stack
           </h2>
           <div className="h-[1px] bg-navy-600 flex-grow max-w-xs"></div>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map((skillGroup, index) => (
-            <motion.div
+            <div
               key={skillGroup.category}
-              variants={fadeInUp}
               className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_20px_rgba(100,255,218,0.15)] hover:-translate-y-1 transition-all duration-300 border border-white/10 hover:border-green/40 group"
             >
               <h3 className="text-xl font-bold text-slate-100 mb-4 group-hover:text-green transition-colors">
@@ -109,10 +99,10 @@ export default function Skills() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </Section>
   );
 }

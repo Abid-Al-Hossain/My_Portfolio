@@ -46,27 +46,13 @@ export default function Projects() {
   return (
     <Section id="projects">
       <div className="space-y-12">
-        <motion.h2
-          variants={fadeInUp}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, amount: 0.1 }}
-          className="text-3xl font-bold text-white flex items-center gap-2"
-        >
+        <h2 className="text-3xl font-bold text-white flex items-center gap-2">
           Projects
-        </motion.h2>
+        </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-                delay: index * 0.1,
-              }}
+            <div
+              key={project.title}
               className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all group hover:-translate-y-2"
             >
               <div className="flex justify-between items-start mb-4">
@@ -87,7 +73,7 @@ export default function Projects() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

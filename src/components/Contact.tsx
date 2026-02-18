@@ -8,13 +8,7 @@ import { fadeInUp } from "@/lib/animations";
 export default function Contact() {
   return (
     <Section id="contact" className="min-h-[70vh] mb-20 text-center">
-      <motion.div
-        variants={fadeInUp}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.2 }}
-        className="max-w-2xl mx-auto space-y-8"
-      >
+      <div className="max-w-2xl mx-auto space-y-8">
         <p className="text-green font-mono">What’s Next?</p>
         <h2 className="text-4xl md:text-5xl font-bold text-slate-200">
           Get In Touch
@@ -72,7 +66,7 @@ export default function Contact() {
             <Mail className="w-6 h-6" />
           </a>
         </div>
-      </motion.div>
+      </div>
     </Section>
   );
 }

@@ -8,13 +8,7 @@ import { fadeInUp } from "@/lib/animations";
 export default function About() {
   return (
     <Section id="about">
-      <motion.div
-        variants={fadeInUp}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid md:grid-cols-2 gap-12 items-center"
-      >
+      <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <div className="flex items-center gap-4 mb-8">
             <h2 className="text-3xl font-bold text-white flex items-center gap-2">
@@ -73,7 +67,7 @@ export default function About() {
           </div>
           <div className="absolute top-4 left-4 w-64 h-64 md:w-80 md:h-80 border-2 border-green rounded z-0 transition-transform duration-300 group-hover:translate-y-2 group-hover:translate-x-2"></div>
         </div>
-      </motion.div>
+      </div>
     </Section>
   );
 }
