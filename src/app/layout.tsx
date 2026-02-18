@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${firaCode.variable} ${outfit.variable} font-sans antialiased bg-navy-900 text-slate-300 selection:bg-green selection:text-navy-900`}
+        className={`${inter.variable} ${firaCode.variable} ${outfit.variable} font-sans antialiased bg-navy-900 text-slate-100 selection:bg-green selection:text-navy-900`}
       >
         {children}
       </body>

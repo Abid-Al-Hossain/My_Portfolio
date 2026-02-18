@@ -79,10 +79,10 @@ export default function Projects() {
               <h3 className="text-xl font-bold text-slate-200 mb-2 group-hover:text-green transition-colors">
                 {project.title}
               </h3>
-              <p className="text-slate-400 text-sm mb-4">
+              <p className="text-slate-300 font-light text-base mb-4">
                 {project.description}
               </p>
-              <ul className="flex flex-wrap gap-2 text-xs font-mono text-slate-500 mt-auto">
+              <ul className="flex flex-wrap gap-2 text-sm font-light font-mono text-slate-400 mt-auto">
                 {project.tech.map((t) => (
                   <li key={t}>{t}</li>
                 ))}

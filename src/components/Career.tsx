@@ -22,13 +22,13 @@ export default function Career() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-navy-700/60 backdrop-blur-xl p-8 rounded-lg border border-white/10 hover:border-green/40 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all duration-300 group"
+            className="bg-navy-700/60 backdrop-blur-xl p-8 rounded-lg border border-white/10 hover:border-green/40 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all duration-300 group space-y-6"
           >
             <div className="flex items-center gap-3 text-white text-xl font-bold">
               <Globe className="text-green" />
               <h3>Future Goals</h3>
             </div>
-            <p className="text-slate-400 leading-relaxed">
+            <p className="text-lg font-light leading-relaxed">
               I am highly interested in{" "}
               <span className="text-green">remote work</span> opportunities and
               building SaaS products. My long-term goal is to specialize in
@@ -44,7 +44,7 @@ export default function Career() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-navy-700/50 text-green rounded-full text-xs font-mono border border-green/20"
+                  className="px-3 py-1 bg-navy-700/50 text-green rounded-full text-sm font-light font-mono border border-green/20"
                 >
                   {tag}
                 </span>
@@ -90,7 +90,9 @@ export default function Career() {
                     <h4 className="text-slate-200 font-bold group-hover:text-green transition-colors">
                       {item.title}
                     </h4>
-                    <p className="text-slate-400 text-sm">{item.desc}</p>
+                    <p className="text-slate-300 font-light text-base">
+                      {item.desc}
+                    </p>
                   </div>
                 </li>
               ))}

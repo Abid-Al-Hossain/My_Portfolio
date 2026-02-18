@@ -22,6 +22,6 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-navy-900 text-slate-400 font-sans;
+    @apply bg-navy-900 text-slate-100 font-sans;
   }
 }

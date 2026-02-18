@@ -103,7 +103,7 @@ export default function Skills() {
                 {skillGroup.items.map((item) => (
                   <li
                     key={item}
-                    className="text-slate-400 text-sm flex items-center gap-2"
+                    className="text-slate-300 font-light text-base flex items-center gap-2"
                   >
                     <span className="text-green text-xs">▹</span> {item}
                   </li>

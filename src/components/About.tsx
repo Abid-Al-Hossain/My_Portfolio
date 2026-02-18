@@ -23,7 +23,7 @@ export default function About() {
             <div className="h-[1px] bg-navy-600 flex-grow max-w-xs"></div>
           </div>
 
-          <div className="text-slate-400 space-y-4 leading-relaxed">
+          <div className="text-lg font-light space-y-4 leading-relaxed">
             <p>
               Hello! My name is Swakkhar and I enjoy creating things that live
               on the internet. My interest in web development started back when
@@ -45,7 +45,7 @@ export default function About() {
             </p>
           </div>
 
-          <ul className="grid grid-cols-2 gap-2 text-sm font-mono text-slate-400 mt-4">
+          <ul className="grid grid-cols-2 gap-2 text-base font-light font-mono text-slate-300 mt-4">
             {[
               "JavaScript (ES6+)",
               "TypeScript",
