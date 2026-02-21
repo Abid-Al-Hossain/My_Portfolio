@@ -17,7 +17,7 @@ export default function Career() {
         </div>
 
         <div className="grid md:grid-cols-[1fr_2px_1fr] gap-8 md:gap-12 relative">
-          <div className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/40 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all duration-300 group space-y-6 flex flex-col h-full">
+          <div className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/40 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] hover:scale-[1.02] transition-all duration-700 group space-y-6 flex flex-col h-full">
             <div>
               <div className="flex items-center gap-3 text-white text-xl font-bold mb-6">
                 <Globe className="text-green" />

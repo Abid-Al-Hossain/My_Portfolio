@@ -84,7 +84,7 @@ export default function Skills() {
           {skills.map((skillGroup, index) => (
             <div
               key={skillGroup.category}
-              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_20px_rgba(100,255,218,0.15)] hover:-translate-y-1 transition-all duration-300 border border-white/10 hover:border-green/40 group"
+              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] hover:scale-[1.02] transition-all duration-700 border border-white/10 hover:border-green/40 group"
             >
               <h3 className="text-xl font-bold text-slate-100 mb-4 group-hover:text-green transition-colors">
                 {skillGroup.category}

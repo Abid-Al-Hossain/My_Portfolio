@@ -28,11 +28,11 @@ export default function Header() {
   return (
     <motion.header
       variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
+        visible: { opacity: 1, y: 0 },
+        hidden: { opacity: 0, y: -20 },
       }}
       animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
+      transition={{ duration: 1.5, ease: "easeInOut" }}
       className="fixed top-0 w-full z-50 bg-navy-900/80 backdrop-blur-md border-b border-navy-700/50 shadow-sm"
     >
       <nav className="flex justify-between items-center px-6 md:px-12 py-4 max-w-7xl mx-auto">

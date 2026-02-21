@@ -31,7 +31,7 @@ export default function Contact() {
             href="https://github.com/Abid-Al-Hossain"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+            className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <Github className="w-6 h-6" />
           </a>
@@ -39,7 +39,7 @@ export default function Contact() {
             href="https://www.linkedin.com/in/abid-ahmed-5a1385234/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+            className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <Linkedin className="w-6 h-6" />
           </a>
@@ -47,7 +47,7 @@ export default function Contact() {
             href="https://www.facebook.com/swakkhar.abid"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+            className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <Facebook className="w-6 h-6" />
           </a>
@@ -55,13 +55,13 @@ export default function Contact() {
             href="https://www.instagram.com/procchod123/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+            className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <Instagram className="w-6 h-6" />
           </a>
           <a
             href="mailto:aabid.al.hossain@gmail.com"
-            className="text-slate-400 hover:text-green transition-transform hover:-translate-y-1"
+            className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <Mail className="w-6 h-6" />
           </a>

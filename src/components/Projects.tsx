@@ -53,7 +53,7 @@ export default function Projects() {
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_25px_rgba(100,255,218,0.15)] transition-all group hover:-translate-y-2"
+              className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] transition-all duration-700 group hover:scale-[1.02]"
             >
               <div className="flex justify-between items-start mb-4">
                 <Folder className="w-10 h-10 text-green" />

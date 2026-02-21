@@ -67,9 +67,9 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 md:px-20 lg:px-32 max-w-7xl mx-auto pt-20">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       >
         <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
           Hi, my name is
@@ -77,9 +77,9 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
       >
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight min-h-[1.2em]">
           {text1}
@@ -88,9 +88,9 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
       >
         <h2 className="text-4xl md:text-6xl font-bold text-slate-400 mb-6 tracking-tight min-h-[1.2em]">
           {text2}
@@ -99,9 +99,9 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
       >
         <p className="text-slate-400 max-w-xl text-lg mb-10 leading-relaxed">
           I’m a software engineer specializing in building (and occasionally
@@ -111,9 +111,9 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
         className="flex gap-4"
       >
         <a

@@ -57,15 +57,15 @@ export default function About() {
         </div>
 
         <div className="relative group mx-auto md:mx-0">
-          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded z-10 overflow-hidden transition-transform duration-300 group-hover:-translate-y-2 group-hover:-translate-x-2">
+          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded z-10 overflow-hidden transition-transform duration-700 group-hover:scale-[1.02]">
             <Image
               src="/avatar.jpeg"
               alt="Swakkhar"
               fill
-              className="object-cover transition-all duration-300 pointer-events-none"
+              className="object-cover transition-all duration-700 pointer-events-none group-hover:scale-110"
             />
           </div>
-          <div className="absolute top-4 left-4 w-64 h-64 md:w-80 md:h-80 border-2 border-green rounded z-0 transition-transform duration-300 group-hover:translate-y-2 group-hover:translate-x-2"></div>
+          <div className="absolute top-4 left-4 w-64 h-64 md:w-80 md:h-80 border-2 border-green/50 rounded z-0 transition-all duration-700 group-hover:top-2 group-hover:left-2 group-hover:border-green group-hover:shadow-[0_0_30px_rgba(100,255,218,0.3)]"></div>
         </div>
       </div>
     </Section>
