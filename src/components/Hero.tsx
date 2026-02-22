@@ -58,7 +58,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center text-slate-100">
+    <div className="min-h-[80vh] flex flex-col justify-center text-slate-100 pt-24 md:pt-32">
       <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
         Hi, my name is
       </p>
