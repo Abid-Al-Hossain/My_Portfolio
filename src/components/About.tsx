@@ -38,22 +38,6 @@ export default function About() {
               Machine Learning, which helps me write efficient, optimized code.
             </p>
           </div>
-
-          <ul className="grid grid-cols-2 gap-2 text-base font-light font-mono text-slate-300 mt-4">
-            {[
-              "JavaScript (ES6+)",
-              "TypeScript",
-              "React",
-              "Next.js",
-              "Node.js",
-              "MongoDB",
-              "Tailwind CSS",
-            ].map((skill) => (
-              <li key={skill} className="flex items-center gap-2">
-                <span className="text-green">▹</span> {skill}
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div className="relative group mx-auto md:mx-0">
