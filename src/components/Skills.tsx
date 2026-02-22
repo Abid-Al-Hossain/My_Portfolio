@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+
 const skills = [
   {
     category: "Languages",
@@ -66,20 +68,56 @@ const skills = [
 ];
 
 export default function Skills() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Track scroll position for active indicator
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const scrollLeft = el.scrollLeft;
+      const cardWidth = el.children[0]?.clientWidth || 300;
+      const gap = 24;
+      const idx = Math.round(scrollLeft / (cardWidth + gap));
+      setActiveIndex(Math.min(idx, skills.length - 1));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollTo = (index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.children[0]?.clientWidth || 300;
+    const gap = 24;
+    el.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
+  };
+
   return (
-    <div className="space-y-12 text-slate-100">
-      <div className="flex items-center gap-4 mb-8">
-        <h2 className="text-3xl font-bold text-white flex items-center gap-2">
-          Skills &amp; Tech Stack
-        </h2>
+    <div className="text-slate-100" style={{ perspective: "1200px" }}>
+      <div className="flex items-center gap-4 mb-6">
+        <h2 className="text-3xl font-bold text-white">Skills & Tech Stack</h2>
         <div className="h-[1px] bg-navy-600 flex-grow max-w-xs" />
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {skills.map((skillGroup) => (
+      {/* Horizontal scroll container */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {skills.map((skillGroup, i) => (
           <div
             key={skillGroup.category}
-            className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] hover:scale-[1.02] transition-all duration-700 border border-white/10 hover:border-green/40 group"
+            className="flex-shrink-0 w-[280px] md:w-[320px] snap-center bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] hover:scale-[1.02] transition-all duration-700 border border-white/10 hover:border-green/40 group"
+            style={{
+              transformStyle: "preserve-3d",
+            }}
           >
             <h3 className="text-xl font-bold text-slate-100 mb-4 group-hover:text-green transition-colors">
               {skillGroup.category}
@@ -97,6 +135,26 @@ export default function Skills() {
           </div>
         ))}
       </div>
+
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-2 mt-4">
+        {skills.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              i === activeIndex
+                ? "bg-green w-6"
+                : "bg-slate-500/50 hover:bg-slate-400"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Swipe hint */}
+      <p className="text-center text-slate-500 text-xs mt-2 tracking-widest uppercase">
+        ← swipe →
+      </p>
     </div>
   );
 }

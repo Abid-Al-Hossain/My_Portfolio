@@ -55,3 +55,8 @@
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
 }
+
+/* Hide scrollbar for horizontal carousels */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}

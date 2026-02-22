@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+
 const projects = [
   {
     title: "UI Foundry / UI Kit System",
@@ -39,16 +41,53 @@ const projects = [
 ];
 
 export default function Projects() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const scrollLeft = el.scrollLeft;
+      const cardWidth = el.children[0]?.clientWidth || 340;
+      const gap = 24;
+      const idx = Math.round(scrollLeft / (cardWidth + gap));
+      setActiveIndex(Math.min(idx, projects.length - 1));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollTo = (index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.children[0]?.clientWidth || 340;
+    const gap = 24;
+    el.scrollTo({ left: index * (cardWidth + gap), behavior: "smooth" });
+  };
+
   return (
-    <div className="space-y-12 text-slate-100">
-      <h2 className="text-3xl font-bold text-white flex items-center gap-2">
-        Projects
-      </h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="text-slate-100" style={{ perspective: "1200px" }}>
+      <div className="flex items-center gap-4 mb-6">
+        <h2 className="text-3xl font-bold text-white">Projects</h2>
+        <div className="h-[1px] bg-navy-600 flex-grow max-w-xs" />
+      </div>
+
+      {/* Horizontal scroll container */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
         {projects.map((project) => (
           <div
             key={project.title}
-            className="bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] transition-all duration-700 group hover:scale-[1.02]"
+            className="flex-shrink-0 w-[300px] md:w-[360px] snap-center bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] transition-all duration-700 group hover:scale-[1.02]"
+            style={{ transformStyle: "preserve-3d" }}
           >
             <div className="flex justify-between items-start mb-4">
               <svg
@@ -111,6 +150,25 @@ export default function Projects() {
           </div>
         ))}
       </div>
+
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-2 mt-4">
+        {projects.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              i === activeIndex
+                ? "bg-green w-6"
+                : "bg-slate-500/50 hover:bg-slate-400"
+            }`}
+          />
+        ))}
+      </div>
+
+      <p className="text-center text-slate-500 text-xs mt-2 tracking-widest uppercase">
+        ← swipe →
+      </p>
     </div>
   );
 }
