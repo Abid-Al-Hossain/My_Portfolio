@@ -1,58 +1,32 @@
 "use client";
 
-import { useRef, useMemo, useState, useEffect, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars, Sparkles } from "@react-three/drei";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
+import { CameraRig } from "@/lib/CameraRig";
+import SpaceEnvironment from "./SpaceEnvironment";
 
-function ParticleField() {
-  return (
-    <group>
-      {/* Distant Stars */}
-      <Stars
-        radius={100}
-        depth={50}
-        count={5000}
-        factor={5}
-        saturation={0}
-        fade
-        speed={0.5}
-      />
-      {/* Near Sparkles - Teal */}
-      <Sparkles
-        count={150}
-        scale={10}
-        size={3}
-        speed={0.4}
-        opacity={0.8}
-        color="#64ffda"
-      />
-      {/* Far Sparkles - Purple */}
-      <Sparkles
-        count={150}
-        scale={20}
-        size={5}
-        speed={0.3}
-        opacity={0.6}
-        color="#bd00ff"
-      />
-    </group>
-  );
-}
+const BG_COLOR = new THREE.Color("#030812");
 
 export default function ThreeBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] bg-navy-900 pointer-events-none">
+    <div className="fixed inset-0 z-0">
       <Canvas
-        camera={{ position: [0, 0, 10], fov: 60 }}
-        gl={{ antialias: true, alpha: true }}
+        camera={{ position: [0, 0, 10], fov: 60, near: 0.1, far: 500 }}
+        gl={{ antialias: true, alpha: false }}
         dpr={[1, 1.5]}
+        style={{ background: "#030812" }}
+        onCreated={({ gl, scene }) => {
+          gl.setClearColor(BG_COLOR, 1);
+          scene.background = BG_COLOR;
+        }}
       >
-        <color attach="background" args={["#061025"]} />
-        <fog attach="fog" args={["#061025", 5, 20]} />
         <ambientLight intensity={1.6} />
+
+        <CameraRig />
+
         <Suspense fallback={null}>
-          <ParticleField />
+          <SpaceEnvironment />
         </Suspense>
       </Canvas>
     </div>

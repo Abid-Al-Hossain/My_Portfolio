@@ -1,29 +1,55 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { ReactNode, useRef, useEffect } from "react";
+import {
+  useScrollState,
+  getSectionVisibility,
+  SECTION_STOPS,
+} from "@/lib/useScrollCamera";
 
-interface SectionProps {
+interface SectionPortalProps {
   children: ReactNode;
+  sectionIndex: number;
   id?: string;
-  className?: string;
 }
 
-export default function Section({ children, id, className }: SectionProps) {
+export default function SectionPortal({
+  children,
+  sectionIndex,
+  id,
+}: SectionPortalProps) {
+  const { cameraZ } = useScrollState();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const zPosition = SECTION_STOPS[sectionIndex];
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const { scale, opacity, visible } = getSectionVisibility(
+      cameraZ,
+      zPosition,
+    );
+
+    containerRef.current.style.transform = `scale(${scale})`;
+    containerRef.current.style.opacity = String(opacity);
+    containerRef.current.style.pointerEvents = visible ? "auto" : "none";
+    containerRef.current.style.visibility = visible ? "visible" : "hidden";
+  }, [cameraZ, zPosition]);
+
   return (
-    <motion.section
+    <div
+      ref={containerRef}
       id={id}
-      initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1.5, ease: "easeOut" }}
-      className={cn(
-        "min-h-screen py-20 px-6 md:px-20 lg:px-32 max-w-7xl mx-auto flex flex-col justify-center",
-        className,
-      )}
+      className="fixed inset-0 z-20 flex items-center justify-center"
+      style={{
+        willChange: "transform, opacity",
+        transformOrigin: "center center",
+        opacity: 0,
+        visibility: "hidden",
+      }}
     >
-      {children}
-    </motion.section>
+      <div className="w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-20">
+        {children}
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Hero() {
@@ -18,35 +16,30 @@ export default function Hero() {
 
     const loop = async () => {
       while (!isCancelled) {
-        // 1. Type Name
         setShowCursor1(true);
         for (let i = 0; i <= name.length; i++) {
           if (isCancelled) break;
           setText1(name.slice(0, i));
-          await new Promise((r) => setTimeout(r, 100)); // Typing speed
+          await new Promise((r) => setTimeout(r, 100));
         }
         setShowCursor1(false);
 
-        // 2. Type Title
         setShowCursor2(true);
         for (let i = 0; i <= title.length; i++) {
           if (isCancelled) break;
           setText2(title.slice(0, i));
-          await new Promise((r) => setTimeout(r, 50)); // Faster typing for longer text
+          await new Promise((r) => setTimeout(r, 50));
         }
 
-        // 3. Wait
         await new Promise((r) => setTimeout(r, 3000));
 
-        // 4. Delete Title
         for (let i = title.length; i >= 0; i--) {
           if (isCancelled) break;
           setText2(title.slice(0, i));
-          await new Promise((r) => setTimeout(r, 30)); // Deleting speed
+          await new Promise((r) => setTimeout(r, 30));
         }
         setShowCursor2(false);
 
-        // 5. Delete Name
         setShowCursor1(true);
         for (let i = name.length; i >= 0; i--) {
           if (isCancelled) break;
@@ -65,82 +58,73 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 md:px-20 lg:px-32 max-w-7xl mx-auto pt-20">
-      <motion.div
-        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-      >
-        <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
-          Hi, my name is
-        </p>
-      </motion.div>
+    <div className="min-h-[80vh] flex flex-col justify-center text-slate-100">
+      <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
+        Hi, my name is
+      </p>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
-      >
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight min-h-[1.2em]">
-          {text1}
-          {showCursor1 && <span className="animate-pulse text-green">_</span>}
-        </h1>
-      </motion.div>
+      <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight min-h-[1.2em]">
+        {text1}
+        {showCursor1 && <span className="animate-pulse text-green">_</span>}
+      </h1>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-      >
-        <h2 className="text-4xl md:text-6xl font-bold text-slate-400 mb-6 tracking-tight min-h-[1.2em]">
-          {text2}
-          {showCursor2 && <span className="animate-pulse text-green">_</span>}
-        </h2>
-      </motion.div>
+      <h2 className="text-4xl md:text-6xl font-bold text-slate-400 mb-6 tracking-tight min-h-[1.2em]">
+        {text2}
+        {showCursor2 && <span className="animate-pulse text-green">_</span>}
+      </h2>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
-      >
-        <p className="text-slate-400 max-w-xl text-lg mb-10 leading-relaxed">
-          I’m a software engineer specializing in building (and occasionally
-          designing) exceptional digital experiences. Currently, I’m focused on
-          building accessible, human-centered products.
-        </p>
-      </motion.div>
+      <p className="text-slate-400 max-w-xl text-lg mb-10 leading-relaxed">
+        I&apos;m a software engineer specializing in building (and occasionally
+        designing) exceptional digital experiences. Currently, I&apos;m focused
+        on building accessible, human-centered products.
+      </p>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
-        className="flex gap-4"
-      >
-        <a
-          href="#projects"
+      <div className="flex gap-4">
+        <button
+          onClick={() => {
+            const el = document.getElementById("projects");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }}
           className="px-6 py-4 rounded bg-transparent border border-green text-green font-mono text-sm hover:bg-green/10 transition-colors flex items-center gap-2 group"
         >
           Check out my work
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </a>
+          <svg
+            className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </button>
         <button className="px-6 py-4 rounded bg-green/10 text-green font-mono text-sm hover:bg-green/20 transition-colors flex items-center gap-2">
-          <Download className="w-4 h-4" />
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
           Resume
         </button>
-      </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ delay: 1, duration: 1.5, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-400"
-      >
-        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-slate-400 to-transparent mx-auto mb-2 opacity-50"></div>
-        <p className="text-xs font-mono tracking-widest text-center opacity-70">
-          SCROLL
-        </p>
-      </motion.div>
-    </section>
+      <div className="mt-16 text-slate-400 text-center animate-bounce">
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-slate-400 to-transparent mx-auto mb-2 opacity-50" />
+        <p className="text-xs font-mono tracking-widest opacity-70">SCROLL</p>
+      </div>
+    </div>
   );
 }

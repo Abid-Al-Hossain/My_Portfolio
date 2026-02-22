@@ -1,58 +1,67 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { scrollToSection, SECTION_IDS } from "@/lib/useScrollCamera";
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "About", index: 1 },
+  { name: "Skills", index: 2 },
+  { name: "Projects", index: 3 },
+  { name: "Contact", index: 5 },
 ];
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { scrollY } = useScroll();
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
+  useEffect(() => {
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 150) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [lastScrollY]);
+
+  const handleNavClick = useCallback((index: number) => {
+    scrollToSection(index);
+    setIsOpen(false);
+  }, []);
 
   return (
-    <motion.header
-      variants={{
-        visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: -20 },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 1.5, ease: "easeInOut" }}
-      className="fixed top-0 w-full z-50 bg-navy-900/80 backdrop-blur-md border-b border-navy-700/50 shadow-sm"
+    <header
+      style={{ backgroundColor: "rgba(17, 34, 64, 0.70)" }}
+      className={`fixed top-0 w-full z-50 backdrop-blur-md border-b border-navy-700/50 shadow-sm transition-all duration-700 ${
+        hidden
+          ? "opacity-0 -translate-y-5 pointer-events-none"
+          : "opacity-100 translate-y-0"
+      }`}
     >
       <nav className="flex justify-between items-center px-6 md:px-12 py-4 max-w-7xl mx-auto">
-        <a
-          href="#"
+        <button
+          onClick={() => handleNavClick(0)}
           className="text-green font-bold text-xl md:text-2xl font-mono"
         >
           &lt;S/&gt;
-        </a>
+        </button>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-8 items-center">
-          {navLinks.map((link, i) => (
+          {navLinks.map((link) => (
             <li key={link.name}>
-              <a
-                href={link.href}
-                className="text-slate-400 hover:text-green text-sm font-mono transition-colors"
+              <button
+                onClick={() => handleNavClick(link.index)}
+                className="text-slate-400 hover:text-green text-sm font-mono transition-colors bg-transparent border-none cursor-pointer"
               >
                 {link.name}
-              </a>
+              </button>
             </li>
           ))}
           <a
@@ -68,26 +77,48 @@ export default function Header() {
           className="md:hidden text-green z-50"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X /> : <Menu />}
+          {isOpen ? (
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
         </button>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className="fixed inset-0 bg-navy-800 z-40 flex flex-col items-center justify-center gap-8 md:hidden"
-          >
-            {navLinks.map((link, i) => (
-              <a
+          <div className="fixed inset-0 bg-navy-800 z-40 flex flex-col items-center justify-center gap-8 md:hidden animate-fade-in">
+            {navLinks.map((link) => (
+              <button
                 key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-slate-200 hover:text-green text-lg font-mono"
+                onClick={() => handleNavClick(link.index)}
+                className="text-slate-200 hover:text-green text-lg font-mono bg-transparent border-none cursor-pointer"
               >
                 {link.name}
-              </a>
+              </button>
             ))}
             <a
               href="/resume.pdf"
@@ -95,9 +126,9 @@ export default function Header() {
             >
               Resume
             </a>
-          </motion.div>
+          </div>
         )}
       </nav>
-    </motion.header>
+    </header>
   );
 }
