@@ -24,7 +24,7 @@
     overflow-x: hidden;
   }
   body {
-    background-color: #030812;
+    background-color: #050b1e;
     @apply text-slate-100 font-sans;
     overflow-x: hidden;
   }
@@ -43,8 +43,14 @@
 
 /* Animate fade in for mobile nav */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;

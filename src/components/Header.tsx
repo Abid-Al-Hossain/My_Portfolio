@@ -37,7 +37,7 @@ export default function Header() {
 
   return (
     <header
-      style={{ backgroundColor: "rgba(17, 34, 64, 0.70)" }}
+      style={{ backgroundColor: "rgba(17, 34, 64, 0.60)" }}
       className={`fixed top-0 w-full z-50 backdrop-blur-md border-b border-navy-700/50 shadow-sm transition-all duration-700 ${
         hidden
           ? "opacity-0 -translate-y-5 pointer-events-none"
