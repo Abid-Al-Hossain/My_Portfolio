@@ -153,7 +153,7 @@ export default function Projects() {
         {/* Horizontal scroll container */}
         <div
           ref={scrollRef}
-          className="flex relative gap-6 overflow-x-auto pb-4 snap-x snap-mandatory px-12"
+          className="flex relative gap-6 overflow-x-auto py-8 snap-x snap-mandatory px-12"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
