@@ -2,38 +2,8 @@
 
 import { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Stars, Sparkles, Cloud } from "@react-three/drei";
+import { Stars, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
-
-function FloatingShape({
-  position,
-  color,
-}: {
-  position: [number, number, number];
-  color: string;
-}) {
-  return (
-    <Float
-      speed={2} // Animation speed
-      rotationIntensity={1} // XYZ rotation intensity
-      floatIntensity={2} // Up/down float intensity
-      floatingRange={[-1, 1]} // Range of y-axis values
-    >
-      <mesh position={position}>
-        <icosahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color={color}
-          wireframe
-          wireframeLinewidth={2}
-          transparent
-          opacity={0.3}
-          emissive={color}
-          emissiveIntensity={0.5}
-        />
-      </mesh>
-    </Float>
-  );
-}
 
 function ParticleField() {
   return (
@@ -78,17 +48,11 @@ export default function ThreeBackground() {
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 1.5]}
       >
-        <color attach="background" args={["#061025"]} />{" "}
-        {/* Slightly brighter deep navy */}
+        <color attach="background" args={["#061025"]} />
         <fog attach="fog" args={["#061025", 5, 20]} />
         <ambientLight intensity={1.6} />
         <Suspense fallback={null}>
           <ParticleField />
-
-          {/* Gentle floating backdrop shapes */}
-          <FloatingShape position={[-4, 2, -5]} color="#64ffda" />
-          <FloatingShape position={[4, -2, -6]} color="#bd00ff" />
-          <FloatingShape position={[0, 4, -8]} color="#ffffff" />
         </Suspense>
       </Canvas>
     </div>
