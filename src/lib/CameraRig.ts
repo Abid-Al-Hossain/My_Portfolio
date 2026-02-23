@@ -3,7 +3,11 @@
 import { useRef, useEffect, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { SECTION_STOPS } from "@/lib/useScrollCamera";
+import {
+  SECTION_STOPS,
+  getScrollHeight,
+  applyScrollSnapping,
+} from "@/lib/useScrollCamera";
 
 const Z_START = SECTION_STOPS[0];
 const Z_END = SECTION_STOPS[SECTION_STOPS.length - 1];
@@ -25,13 +29,16 @@ export function CameraRig() {
 
   const updateTarget = useCallback(() => {
     const scrollTop = window.scrollY || 0;
-    const totalHeight = SECTION_STOPS.length * window.innerHeight;
-    const scrollHeight = totalHeight - window.innerHeight;
-    const progress = Math.min(
+    const scrollHeight = getScrollHeight() - window.innerHeight;
+    const rawProgress = Math.min(
       1,
       Math.max(0, scrollTop / Math.max(1, scrollHeight)),
     );
-    targetZ.current = Z_START - progress * TOTAL_Z + 10; // +10 camera offset
+    const snappedProgress = applyScrollSnapping(
+      rawProgress,
+      SECTION_STOPS.length,
+    );
+    targetZ.current = Z_START - snappedProgress * TOTAL_Z + 10; // +10 camera offset
   }, []);
 
   useEffect(() => {
