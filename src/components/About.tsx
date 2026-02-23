@@ -41,7 +41,7 @@ export default function About() {
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded z-10 overflow-hidden transition-transform duration-700 group-hover:scale-[1.02]">
             <Image
               src="/avatar.jpeg"
-              alt="Swakkhar"
+              alt="Swakkhar (Abid Al Hossain) - Full Stack Developer and Creative Engineer Portfolio"
               fill
               className="object-cover transition-all duration-700 pointer-events-none group-hover:scale-110"
             />
