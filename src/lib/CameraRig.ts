@@ -7,12 +7,13 @@ import {
   SECTION_STOPS,
   getScrollHeight,
   applyScrollSnapping,
+  getNavDelta,
 } from "@/lib/useScrollCamera";
 
 const Z_START = SECTION_STOPS[0];
 const Z_END = SECTION_STOPS[SECTION_STOPS.length - 1];
 const TOTAL_Z = Math.abs(Z_END - Z_START);
-const LERP_FACTOR = 0.06;
+const LERP_FACTOR = 0.06; // used only as local fallback
 const BASE_FOV = 60;
 const FOV_RANGE = 3;
 
@@ -52,7 +53,7 @@ export function CameraRig() {
   }, [camera, updateTarget]);
 
   useFrame(() => {
-    currentZ.current += (targetZ.current - currentZ.current) * LERP_FACTOR;
+    currentZ.current += getNavDelta(currentZ.current, targetZ.current);
 
     velocity.current = Math.abs(currentZ.current - prevZ.current);
     prevZ.current = currentZ.current;

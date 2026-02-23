@@ -113,7 +113,57 @@ export function scrollToSection(index: number): void {
   const targetProgress = targetWeight / totalWeight;
   const targetScroll = targetProgress * scrollHeight;
 
-  window.scrollTo({ top: targetScroll, behavior: "smooth" });
+  // CRITICAL: Temporarily disable CSS scroll-smooth on <html> so
+  // scrollTo is truly instant. Otherwise the browser's native smooth
+  // scroll fires continuous scroll events over ~500ms, bypassing our
+  // constant-speed camera animation.
+  _isNavFlying = true;
+  const html = document.documentElement;
+  html.style.scrollBehavior = "auto";
+  window.scrollTo({ top: targetScroll, behavior: "instant" as ScrollBehavior });
+  // Restore scroll-smooth after a microtask so it doesn't affect this scrollTo
+  requestAnimationFrame(() => {
+    html.style.scrollBehavior = "";
+  });
+}
+
+// ─── Shared nav travel state ───
+const NAV_CRUISE_SPEED = 0.8; // Constant Z-units per frame during fly-through
+const NAV_ARRIVE_DIST = 15; // Within this distance, switch to LERP for smooth landing
+const NAV_ARRIVE_LERP = 0.035; // LERP factor for landing phase
+
+/** Whether we're in a nav-triggered fly-through */
+let _isNavFlying = false;
+
+/**
+ * Computes the camera movement delta for this frame.
+ * During nav flying: constant speed cruise, then LERP landing.
+ * During normal scroll: standard LERP.
+ */
+export function getNavDelta(currentZ: number, targetZ: number): number {
+  if (!_isNavFlying) {
+    return (targetZ - currentZ) * LERP_FACTOR;
+  }
+
+  const diff = targetZ - currentZ;
+  const dist = Math.abs(diff);
+  const dir = Math.sign(diff);
+
+  if (dist < NAV_ARRIVE_DIST) {
+    // Close to target — use LERP for smooth deceleration
+    return diff * NAV_ARRIVE_LERP;
+  }
+
+  // Cruise at constant speed through intermediate sections
+  return dir * NAV_CRUISE_SPEED;
+}
+
+// Keep this export for CameraRig compatibility
+export function getEffectiveLerp(distToTarget?: number): number {
+  if (!_isNavFlying) return LERP_FACTOR;
+  const dist = distToTarget ?? NAV_ARRIVE_DIST;
+  if (dist < NAV_ARRIVE_DIST) return NAV_ARRIVE_LERP;
+  return LERP_FACTOR; // not used when getNavDelta handles it, but kept as fallback
 }
 
 /**
@@ -158,7 +208,15 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     const animate = () => {
-      currentZ.current += (targetZ.current - currentZ.current) * LERP_FACTOR;
+      // Use constant-speed cruise during nav, normal LERP otherwise
+      currentZ.current += getNavDelta(currentZ.current, targetZ.current);
+
+      // End nav flying once camera has arrived
+      const distanceToTarget = Math.abs(targetZ.current - currentZ.current);
+      if (_isNavFlying && distanceToTarget < 1) {
+        _isNavFlying = false;
+      }
+
       const scrollTop = window.scrollY || 0;
       const scrollHeight = getScrollHeight() - window.innerHeight;
       const rawProgress = Math.min(

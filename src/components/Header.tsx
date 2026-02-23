@@ -7,6 +7,7 @@ const navLinks = [
   { name: "About", index: 1 },
   { name: "Skills", index: 2 },
   { name: "Projects", index: 3 },
+  { name: "Career", index: 4 },
   { name: "Contact", index: 5 },
 ];
 
