@@ -1,10 +1,17 @@
 "use client";
 
 import { Stars, Sparkles } from "@react-three/drei";
+import ShootingStar from "./ShootingStar";
 
 export default function SpaceEnvironment() {
   return (
     <group>
+      {/* Shooting Stars - Added for majestic effect - Speed reduced and trajectories refined */}
+      {/* Delays fine-tuned for balance: ~12-18s minimum wait between stars */}
+      <ShootingStar delayRange={[12000, 20000]} speed={0.4} />
+      <ShootingStar delayRange={[20000, 35000]} speed={0.3} />
+      <ShootingStar delayRange={[35000, 60000]} speed={0.5} />
+
       {/* Original star field — extended along Z corridor for fly-through */}
       <Stars
         radius={100}
