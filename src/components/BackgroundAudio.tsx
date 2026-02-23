@@ -17,24 +17,37 @@ export default function BackgroundAudio() {
     audioRef.current.loop = true;
     audioRef.current.volume = volume;
 
-    // Attempt autoplay across browsers
-    const playPromise = audioRef.current.play();
+    const startAudio = () => {
+      if (audioRef.current && !isPlaying) {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            setHasInteracted(true);
+            // Remove listeners once audio starts
+            window.removeEventListener("click", startAudio);
+            window.removeEventListener("scroll", startAudio);
+            window.removeEventListener("touchstart", startAudio);
+          })
+          .catch((err) => console.log("Audio play failed:", err));
+      }
+    };
 
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => setIsPlaying(true))
-        .catch(() =>
-          console.log("Autoplay blocked. Waiting for user interaction."),
-        );
-    }
+    // Listen for the first user interaction to bypass browser autoplay blocks
+    window.addEventListener("click", startAudio);
+    window.addEventListener("scroll", startAudio);
+    window.addEventListener("touchstart", startAudio);
 
     return () => {
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("scroll", startAudio);
+      window.removeEventListener("touchstart", startAudio);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [isPlaying]);
 
   // Update audio element volume when state changes
   useEffect(() => {

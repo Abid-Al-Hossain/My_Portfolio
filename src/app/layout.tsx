@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-portfolio-url.com", // User should update after hosting
+    url: "https://my-portfolio-woad-alpha-94.vercel.app", // Updated from placeholder
     title: "Swakkhar | Full Stack Developer | Modern Portfolio",
     description:
       "Explore the creative and technical portfolio of Swakkhar. Leading-edge web development and 3D experiences.",
@@ -107,7 +107,7 @@ export default function RootLayout({
       "Swakhar",
     ],
     jobTitle: "Full Stack Developer",
-    url: "https://your-portfolio-url.com",
+    url: "https://my-portfolio-woad-alpha-94.vercel.app",
     sameAs: [
       "https://github.com/Abid-Al-Hossain",
       "https://www.linkedin.com/in/abid-ahmed-5a1385234/",
