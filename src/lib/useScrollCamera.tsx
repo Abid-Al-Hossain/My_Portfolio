@@ -35,8 +35,8 @@ const FOV_RANGE = 3;
 export const MAX_VISIBLE_DISTANCE = 20;
 
 // Scroll pacing — how much of each section's scroll budget is a deadzone vs transition
-const PAUSE_WEIGHT = 0.2; // 20% pause (subtle sticky feel)
-const TRANSITION_WEIGHT = 0.8; // 80% smooth movement between sections
+const PAUSE_WEIGHT = 0.1; // 10% pause (subtle sticky feel)
+const TRANSITION_WEIGHT = 0.9; // 90% smooth movement between sections
 
 /**
  * Maps linear scroll progress [0, 1] into a stepped progress with plateaus
@@ -128,9 +128,9 @@ export function scrollToSection(index: number): void {
 }
 
 // ─── Shared nav travel state ───
-const NAV_CRUISE_SPEED = 0.8; // Constant Z-units per frame during fly-through
+const NAV_CRUISE_SPEED = 2; // Constant Z-units per frame during fly-through
 const NAV_ARRIVE_DIST = 15; // Within this distance, switch to LERP for smooth landing
-const NAV_ARRIVE_LERP = 0.035; // LERP factor for landing phase
+const NAV_ARRIVE_LERP = 0.04; // LERP factor for landing phase
 
 /** Whether we're in a nav-triggered fly-through */
 let _isNavFlying = false;
