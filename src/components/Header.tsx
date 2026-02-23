@@ -15,6 +15,7 @@ export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMouseNearTop, setIsMouseNearTop] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -27,8 +28,21 @@ export default function Header() {
       setLastScrollY(currentScrollY);
     };
 
+    const onMouseMove = (e: MouseEvent) => {
+      // Show header if mouse is within 80px of the top
+      if (e.clientY < 80) {
+        setIsMouseNearTop(true);
+      } else {
+        setIsMouseNearTop(false);
+      }
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("mousemove", onMouseMove);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("mousemove", onMouseMove);
+    };
   }, [lastScrollY]);
 
   const handleNavClick = useCallback((index: number) => {
@@ -40,9 +54,9 @@ export default function Header() {
     <header
       style={{ backgroundColor: "rgba(17, 34, 64, 0.60)" }}
       className={`fixed top-0 w-full z-50 backdrop-blur-md border-b border-navy-700/50 shadow-sm transition-all duration-700 ${
-        hidden
-          ? "opacity-0 -translate-y-5 pointer-events-none"
-          : "opacity-100 translate-y-0"
+        !hidden || isMouseNearTop || isOpen
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 -translate-y-5 pointer-events-none"
       }`}
     >
       <nav className="flex justify-between items-center px-6 md:px-12 py-4 max-w-7xl mx-auto">
