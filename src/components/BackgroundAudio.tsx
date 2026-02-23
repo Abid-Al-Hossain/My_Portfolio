@@ -12,42 +12,46 @@ export default function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Standard HTML5 Audio implementation for the MP3 file
-    audioRef.current = new Audio("/audio/bg_compressed.mp3");
-    audioRef.current.loop = true;
-    audioRef.current.volume = volume;
+    // Initialize audio object once on mount
+    const audio = new Audio("/audio/bg_compressed.mp3");
+    audio.loop = true;
+    audio.volume = volume;
+    audioRef.current = audio;
 
     const startAudio = () => {
-      if (audioRef.current && !isPlaying) {
-        audioRef.current
+      // If already playing or interacted, don't trigger again
+      if (audio.paused) {
+        audio
           .play()
           .then(() => {
             setIsPlaying(true);
             setHasInteracted(true);
-            // Remove listeners once audio starts
-            window.removeEventListener("click", startAudio);
-            window.removeEventListener("scroll", startAudio);
-            window.removeEventListener("touchstart", startAudio);
+            removeListeners();
           })
-          .catch((err) => console.log("Audio play failed:", err));
+          .catch((err) =>
+            console.log("Audio play failed on interaction:", err),
+          );
       }
+    };
+
+    const removeListeners = () => {
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("scroll", startAudio);
+      window.removeEventListener("touchstart", startAudio);
     };
 
     // Listen for the first user interaction to bypass browser autoplay blocks
     window.addEventListener("click", startAudio);
-    window.addEventListener("scroll", startAudio);
-    window.addEventListener("touchstart", startAudio);
+    window.addEventListener("scroll", startAudio, { passive: true });
+    window.addEventListener("touchstart", startAudio, { passive: true });
 
     return () => {
-      window.removeEventListener("click", startAudio);
-      window.removeEventListener("scroll", startAudio);
-      window.removeEventListener("touchstart", startAudio);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      removeListeners();
+      audio.pause();
+      audio.src = "";
+      audioRef.current = null;
     };
-  }, [isPlaying]);
+  }, []); // Only run on mount
 
   // Update audio element volume when state changes
   useEffect(() => {
