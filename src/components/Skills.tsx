@@ -176,11 +176,12 @@ export default function Skills() {
 
         <div
           ref={scrollRef}
-          className="flex relative gap-6 overflow-x-auto py-8 snap-x snap-mandatory px-12"
+          className="flex relative gap-6 overflow-x-auto py-8 snap-x snap-proximity px-12"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             WebkitOverflowScrolling: "touch",
+            scrollBehavior: "smooth",
           }}
         >
           {skills.map((skillGroup, i) => (
