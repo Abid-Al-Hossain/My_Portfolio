@@ -111,7 +111,9 @@ export function scrollToSection(index: number): void {
   const targetWeight = pauseStartWeight + PAUSE_WEIGHT / 2;
 
   const targetProgress = targetWeight / totalWeight;
-  const targetScroll = targetProgress * scrollHeight;
+  // Explicitly force absolute 0 for the Hero section so we hit the exact top
+  // of the HTML document, triggering a full runway approach animation.
+  const targetScroll = index === 0 ? 0 : targetProgress * scrollHeight;
 
   // CRITICAL: Temporarily disable CSS scroll-smooth on <html> so
   // scrollTo is truly instant. Otherwise the browser's native smooth
@@ -128,9 +130,9 @@ export function scrollToSection(index: number): void {
 }
 
 // ─── Shared nav travel state ───
-const NAV_CRUISE_SPEED = 2; // Constant Z-units per frame during fly-through
+const NAV_CRUISE_SPEED = 3.5; // Constant Z-units per frame during fly-through
 const NAV_ARRIVE_DIST = 15; // Within this distance, switch to LERP for smooth landing
-const NAV_ARRIVE_LERP = 0.04; // LERP factor for landing phase
+const NAV_ARRIVE_LERP = 0.1; // LERP factor for landing phase
 
 /** Whether we're in a nav-triggered fly-through */
 let _isNavFlying = false;
