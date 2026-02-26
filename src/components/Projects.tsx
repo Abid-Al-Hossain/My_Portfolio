@@ -98,7 +98,10 @@ export default function Projects() {
   };
 
   return (
-    <div className="text-slate-100" style={{ perspective: "1200px" }}>
+    <div
+      className="text-slate-100 pt-24 pb-12 md:py-0"
+      style={{ perspective: "1200px" }}
+    >
       <div className="flex items-center gap-4 mb-6">
         <h2 className="text-3xl font-bold text-white">Projects</h2>
         <div className="h-[1px] bg-navy-600 flex-grow max-w-xs" />

@@ -2,7 +2,7 @@
 
 export default function Contact() {
   return (
-    <div className="min-h-[60vh] text-center text-slate-100 flex flex-col justify-center">
+    <div className="min-h-[60vh] text-center text-slate-100 flex flex-col justify-center pt-24 pb-12 md:py-0">
       <div className="max-w-2xl mx-auto space-y-8">
         <p className="text-green font-mono">What&apos;s Next?</p>
         <h2 className="text-4xl md:text-5xl font-bold text-slate-200">

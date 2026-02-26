@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <div className="text-slate-100">
+    <div className="text-slate-100 py-6 md:py-0">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <div className="flex items-center gap-4 mb-8">

@@ -2,7 +2,7 @@
 
 export default function Career() {
   return (
-    <div className="space-y-12 text-slate-100">
+    <div className="space-y-12 text-slate-100 pt-14 pb-12 md:py-0">
       <div className="flex items-center gap-4 mb-8">
         <h2 className="text-3xl font-bold text-white flex items-center gap-2">
           <span className="text-green font-mono text-2xl">04.</span> Career

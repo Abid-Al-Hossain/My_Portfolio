@@ -122,7 +122,10 @@ export default function Skills() {
   };
 
   return (
-    <div className="text-slate-100" style={{ perspective: "1200px" }}>
+    <div
+      className="text-slate-100 py-10 md:py-0"
+      style={{ perspective: "1200px" }}
+    >
       <div className="flex items-center gap-4 mb-6">
         <h2 className="text-3xl font-bold text-white">Skills & Tech Stack</h2>
         <div className="h-[1px] bg-navy-600 flex-grow max-w-xs" />

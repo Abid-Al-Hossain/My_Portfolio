@@ -178,7 +178,7 @@ export default function Hero() {
   return (
     <div
       ref={heroRef}
-      className="min-h-[80vh] flex flex-col justify-center text-slate-100 pt-24 md:pt-32"
+      className="min-h-[70vh] flex flex-col justify-center text-slate-100 pt-8 md:pt-32"
     >
       <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
         Hi, my name is
