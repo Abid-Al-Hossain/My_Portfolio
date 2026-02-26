@@ -28,16 +28,36 @@ export default function BackgroundAudio() {
     }
   }, [bgVolume]);
 
-  // Watch for Context toggle changes
+  // Watch for Context toggle changes and handle browser unpausing
   useEffect(() => {
     if (!audioRef.current) return;
 
     if (bgSoundEnabled) {
-      audioRef.current
-        .play()
-        .catch((err) =>
-          console.log("Audio play failed due to browser policy:", err),
-        );
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log(
+            "Audio play blocked. Waiting for user interaction...",
+            err,
+          );
+
+          // Browser blocked autoplay. Wait for the user to interact with the page.
+          const unlockAudio = () => {
+            if (bgSoundEnabled && audioRef.current) {
+              audioRef.current
+                .play()
+                .catch((e) => console.error("Still blocked:", e));
+            }
+            window.removeEventListener("click", unlockAudio);
+            window.removeEventListener("keydown", unlockAudio);
+            window.removeEventListener("touchstart", unlockAudio);
+          };
+
+          window.addEventListener("click", unlockAudio, { once: true });
+          window.addEventListener("keydown", unlockAudio, { once: true });
+          window.addEventListener("touchstart", unlockAudio, { once: true });
+        });
+      }
     } else {
       audioRef.current.pause();
     }

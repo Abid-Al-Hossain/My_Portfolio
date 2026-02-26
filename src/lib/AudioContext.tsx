@@ -32,6 +32,37 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [bgVolume, setBgVolume] = useState(0.35);
   const [typingVolume, setTypingVolume] = useState(0.3);
 
+  // Load saved preferences on mount
+  useEffect(() => {
+    try {
+      const savedBg = localStorage.getItem("bgSoundEnabled");
+      if (savedBg !== null) setBgSoundEnabled(savedBg === "true");
+
+      const savedTyping = localStorage.getItem("typingSoundEnabled");
+      if (savedTyping !== null) setTypingSoundEnabled(savedTyping === "true");
+
+      const savedBgVol = localStorage.getItem("bgVolume");
+      if (savedBgVol !== null) setBgVolume(parseFloat(savedBgVol));
+
+      const savedTypingVol = localStorage.getItem("typingVolume");
+      if (savedTypingVol !== null) setTypingVolume(parseFloat(savedTypingVol));
+    } catch (e) {
+      console.error("Could not load audio settings:", e);
+    }
+  }, []);
+
+  // Save preferences when they change
+  useEffect(() => {
+    try {
+      localStorage.setItem("bgSoundEnabled", bgSoundEnabled.toString());
+      localStorage.setItem("typingSoundEnabled", typingSoundEnabled.toString());
+      localStorage.setItem("bgVolume", bgVolume.toString());
+      localStorage.setItem("typingVolume", typingVolume.toString());
+    } catch (e) {
+      console.error("Could not save audio settings:", e);
+    }
+  }, [bgSoundEnabled, typingSoundEnabled, bgVolume, typingVolume]);
+
   return (
     <AudioContext.Provider
       value={{
