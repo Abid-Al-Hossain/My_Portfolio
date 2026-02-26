@@ -1,154 +1,47 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Volume2, VolumeX } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { useAudioSettings } from "@/lib/AudioContext";
 
 export default function BackgroundAudio() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [volume, setVolume] = useState(0.35);
-  const [isHovered, setIsHovered] = useState(false);
+  const { bgSoundEnabled, bgVolume } = useAudioSettings();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Initialize audio object once on mount
     const audio = new Audio("/audio/bg_compressed.mp3");
     audio.loop = true;
-    audio.volume = volume;
+    audio.volume = bgVolume;
     audioRef.current = audio;
 
-    const startAudio = () => {
-      // If already playing or interacted, don't trigger again
-      if (audio.paused) {
-        audio
-          .play()
-          .then(() => {
-            setIsPlaying(true);
-            setHasInteracted(true);
-            removeListeners();
-          })
-          .catch((err) =>
-            console.log("Audio play failed on interaction:", err),
-          );
-      }
-    };
-
-    const removeListeners = () => {
-      window.removeEventListener("click", startAudio);
-      window.removeEventListener("scroll", startAudio);
-      window.removeEventListener("touchstart", startAudio);
-    };
-
-    // Listen for the first user interaction to bypass browser autoplay blocks
-    window.addEventListener("click", startAudio);
-    window.addEventListener("scroll", startAudio, { passive: true });
-    window.addEventListener("touchstart", startAudio, { passive: true });
-
     return () => {
-      removeListeners();
       audio.pause();
       audio.src = "";
       audioRef.current = null;
     };
-  }, []); // Only run on mount
+  }, []);
 
-  // Update audio element volume when state changes
+  // Watch for volume change
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume;
+      audioRef.current.volume = bgVolume;
     }
-  }, [volume]);
+  }, [bgVolume]);
 
-  const toggleMute = () => {
-    setHasInteracted(true);
-
+  // Watch for Context toggle changes
+  useEffect(() => {
     if (!audioRef.current) return;
 
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
+    if (bgSoundEnabled) {
+      audioRef.current
+        .play()
+        .catch((err) =>
+          console.log("Audio play failed due to browser policy:", err),
+        );
     } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasInteracted(true);
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-
-    if (newVolume > 0 && !isPlaying && audioRef.current) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else if (newVolume === 0 && isPlaying && audioRef.current) {
       audioRef.current.pause();
-      setIsPlaying(false);
     }
-  };
+  }, [bgSoundEnabled]);
 
-  return (
-    <div
-      className="fixed bottom-6 right-6 z-[100] flex items-center gap-3"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <AnimatePresence>
-        {!hasInteracted && !isPlaying && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="px-3 py-1.5 text-xs font-mono text-green/80 bg-navy-800/80 backdrop-blur-md rounded border border-green/30 tracking-wide"
-          >
-            Enable Audio
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <motion.div
-        layout
-        className="flex items-center bg-navy-800/50 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg shadow-black/20 hover:border-green/30 transition-colors p-2"
-      >
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              initial={{ width: 0, opacity: 0, marginLeft: 0 }}
-              animate={{ width: 100, opacity: 1, marginLeft: 12 }}
-              exit={{ width: 0, opacity: 0, marginLeft: 0 }}
-              className="overflow-hidden flex items-center"
-            >
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={isPlaying ? volume : 0}
-                onChange={handleVolumeChange}
-                className="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <motion.button
-          layout
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={toggleMute}
-          className="p-2 rounded-full text-slate-300 hover:text-green focus:outline-none ml-2"
-          aria-label={
-            isPlaying ? "Mute Background Audio" : "Play Background Audio"
-          }
-        >
-          {isPlaying ? (
-            <Volume2 className="w-5 h-5 animate-pulse" />
-          ) : (
-            <VolumeX className="w-5 h-5 opacity-70" />
-          )}
-        </motion.button>
-      </motion.div>
-    </div>
-  );
+  return null; // UI controls are now dynamically handled in Header.tsx
 }

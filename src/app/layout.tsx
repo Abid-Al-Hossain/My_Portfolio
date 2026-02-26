@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fira_Code, Outfit } from "next/font/google";
 import "./globals.css";
 import BackgroundAudio from "@/components/BackgroundAudio";
+import { AudioProvider } from "@/lib/AudioContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const firaCode = Fira_Code({
@@ -138,8 +139,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${firaCode.variable} ${outfit.variable} font-sans antialiased bg-navy-900 text-slate-100 selection:bg-green selection:text-navy-900 overflow-x-hidden`}
       >
-        {children}
-        <BackgroundAudio />
+        <AudioProvider>
+          {children}
+          <BackgroundAudio />
+        </AudioProvider>
       </body>
     </html>
   );

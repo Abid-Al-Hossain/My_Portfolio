@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useAudioSettings } from "@/lib/AudioContext";
+import {
+  useScrollState,
+  getSectionVisibility,
+  SECTION_STOPS,
+} from "@/lib/useScrollCamera";
 
 export default function Hero() {
   const [text1, setText1] = useState("");
@@ -11,8 +17,114 @@ export default function Hero() {
   const name = "Swakkhar.";
   const title = "I build things for the web.";
 
+  const { typingSoundEnabled, typingVolume } = useAudioSettings();
+  const typingSoundEnabledRef = useRef(typingSoundEnabled);
+  const typingVolumeRef = useRef(typingVolume);
+
+  // Need a ref to the AudioContext and GainNode to update volume outside of initAudio
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Track visibility perfectly synchronized with the 3D scroll system
+  const { cameraZ } = useScrollState();
+  const { visible, opacity: visibilityOpacity } = getSectionVisibility(
+    cameraZ,
+    SECTION_STOPS[0],
+  );
+  const isVisibleRef = useRef(visible);
+
+  useEffect(() => {
+    isVisibleRef.current = visible;
+  }, [visible]);
+
+  useEffect(() => {
+    typingSoundEnabledRef.current = typingSoundEnabled;
+  }, [typingSoundEnabled]);
+
+  useEffect(() => {
+    // Use the 3D camera opacity to naturally fade the volume as we scroll away
+    const safeOpacity = Math.max(0, visibilityOpacity);
+    const newVolume = typingVolume * safeOpacity;
+
+    typingVolumeRef.current = newVolume;
+    if (gainNodeRef.current && audioCtxRef.current) {
+      // Smoothly transition volume to prevent clicking
+      gainNodeRef.current.gain.setTargetAtTime(
+        newVolume,
+        audioCtxRef.current.currentTime || 0,
+        0.05,
+      );
+    }
+  }, [typingVolume, visibilityOpacity]);
+
   useEffect(() => {
     let isCancelled = false;
+
+    // --- High-Performance Web Audio API Setup ---
+    let typingBuffer: AudioBuffer | null = null;
+    let deleteBuffer: AudioBuffer | null = null;
+
+    const initAudio = async () => {
+      try {
+        const AudioContextClass =
+          window.AudioContext || (window as any).webkitAudioContext;
+        if (!AudioContextClass) return;
+
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new AudioContextClass();
+        }
+        const ctx = audioCtxRef.current;
+        const masterGain = ctx.createGain();
+        masterGain.gain.value = typingVolumeRef.current;
+        masterGain.connect(ctx.destination);
+        gainNodeRef.current = masterGain;
+
+        // Load primary typing sound
+        const response2 = await fetch("/audio/keystroke1.mp3");
+        const arrayBuffer2 = await response2.arrayBuffer();
+        typingBuffer = await ctx.decodeAudioData(arrayBuffer2);
+
+        // Load deletion sound
+        const response1 = await fetch("/audio/keystroke2.mp3");
+        const arrayBuffer1 = await response1.arrayBuffer();
+        deleteBuffer = await ctx.decodeAudioData(arrayBuffer1);
+
+        // Required to unlock AudioContext on some browsers
+        const unlockAudio = () => {
+          if (audioCtxRef.current?.state === "suspended")
+            audioCtxRef.current.resume();
+          window.removeEventListener("click", unlockAudio);
+          window.removeEventListener("touchstart", unlockAudio);
+          window.removeEventListener("keydown", unlockAudio);
+        };
+
+        window.addEventListener("click", unlockAudio, { once: true });
+        window.addEventListener("touchstart", unlockAudio, { once: true });
+        window.addEventListener("keydown", unlockAudio, { once: true });
+      } catch (error) {
+        console.error("Web Audio API error:", error);
+      }
+    };
+
+    initAudio();
+
+    const playSound = (buffer: AudioBuffer | null) => {
+      if (!typingSoundEnabledRef.current || !isVisibleRef.current) return;
+      if (!audioCtxRef.current || !buffer || !gainNodeRef.current) return;
+      if (audioCtxRef.current.state === "suspended") return;
+
+      const source = audioCtxRef.current.createBufferSource();
+      source.buffer = buffer;
+      // Slight pitch variation for organic feel
+      source.playbackRate.value = 0.95 + Math.random() * 0.1;
+      source.connect(gainNodeRef.current);
+      source.start(0);
+    };
+
+    const playTypingSound = () => playSound(typingBuffer);
+    const playDeleteSound = () => playSound(deleteBuffer);
 
     const loop = async () => {
       while (!isCancelled) {
@@ -20,6 +132,7 @@ export default function Hero() {
         for (let i = 0; i <= name.length; i++) {
           if (isCancelled) break;
           setText1(name.slice(0, i));
+          if (i > 0) playTypingSound();
           await new Promise((r) => setTimeout(r, 100));
         }
         setShowCursor1(false);
@@ -28,23 +141,28 @@ export default function Hero() {
         for (let i = 0; i <= title.length; i++) {
           if (isCancelled) break;
           setText2(title.slice(0, i));
-          await new Promise((r) => setTimeout(r, 50));
+          if (i > 0) playTypingSound();
+          await new Promise((r) => setTimeout(r, 50)); // Extremely fast typing (20 CPS)
         }
 
         await new Promise((r) => setTimeout(r, 3000));
 
+        // Deletion Phase - Title
+        if (!isCancelled && title.length > 0) playDeleteSound();
         for (let i = title.length; i >= 0; i--) {
           if (isCancelled) break;
           setText2(title.slice(0, i));
-          await new Promise((r) => setTimeout(r, 30));
+          await new Promise((r) => setTimeout(r, 10)); // Ultra-fast deletion
         }
         setShowCursor2(false);
 
         setShowCursor1(true);
+        // Deletion Phase - Name
+        if (!isCancelled && name.length > 0) playDeleteSound();
         for (let i = name.length; i >= 0; i--) {
           if (isCancelled) break;
           setText1(name.slice(0, i));
-          await new Promise((r) => setTimeout(r, 50));
+          await new Promise((r) => setTimeout(r, 20)); // Extremely fast deletion
         }
 
         await new Promise((r) => setTimeout(r, 1000));
@@ -58,7 +176,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center text-slate-100 pt-24 md:pt-32">
+    <div
+      ref={heroRef}
+      className="min-h-[80vh] flex flex-col justify-center text-slate-100 pt-24 md:pt-32"
+    >
       <p className="text-green font-mono text-lg md:text-xl mb-6 tracking-wider">
         Hi, my name is
       </p>
