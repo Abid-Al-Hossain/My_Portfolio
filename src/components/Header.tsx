@@ -79,7 +79,7 @@ export default function Header() {
     <header
       style={{ backgroundColor: "rgba(17, 34, 64, 0.60)" }}
       className={`fixed top-0 w-full z-50 backdrop-blur-md border-b border-navy-700/50 shadow-sm transition-all duration-700 ${
-        !hidden || isMouseNearTop || isOpen
+        !hidden || isMouseNearTop || isOpen || isAudioMenuOpen
           ? "opacity-100 translate-y-0"
           : "opacity-100 translate-y-0 md:opacity-0 md:-translate-y-5 md:pointer-events-none"
       }`}
