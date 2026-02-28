@@ -120,6 +120,10 @@ export function scrollToSection(index: number): void {
   // scroll fires continuous scroll events over ~500ms, bypassing our
   // constant-speed camera animation.
   _isNavFlying = true;
+  _isNavArriving = false;
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("nav-start"));
+  }
   const html = document.documentElement;
   html.style.scrollBehavior = "auto";
   window.scrollTo({ top: targetScroll, behavior: "instant" as ScrollBehavior });
@@ -136,6 +140,7 @@ const NAV_ARRIVE_LERP = 0.1; // LERP factor for landing phase
 
 /** Whether we're in a nav-triggered fly-through */
 let _isNavFlying = false;
+let _isNavArriving = false;
 
 /**
  * Computes the camera movement delta for this frame.
@@ -215,8 +220,24 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
 
       // End nav flying once camera has arrived
       const distanceToTarget = Math.abs(targetZ.current - currentZ.current);
+
+      if (
+        _isNavFlying &&
+        !_isNavArriving &&
+        distanceToTarget < NAV_ARRIVE_DIST
+      ) {
+        _isNavArriving = true;
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("nav-arrive"));
+        }
+      }
+
       if (_isNavFlying && distanceToTarget < 1) {
         _isNavFlying = false;
+        _isNavArriving = false;
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("nav-stop"));
+        }
       }
 
       const scrollTop = window.scrollY || 0;

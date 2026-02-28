@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fira_Code, Outfit } from "next/font/google";
 import "./globals.css";
 import BackgroundAudio from "@/components/BackgroundAudio";
+import TravelAudio from "@/components/TravelAudio";
 import { AudioProvider } from "@/lib/AudioContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -142,6 +143,7 @@ export default function RootLayout({
         <AudioProvider>
           {children}
           <BackgroundAudio />
+          <TravelAudio />
         </AudioProvider>
       </body>
     </html>

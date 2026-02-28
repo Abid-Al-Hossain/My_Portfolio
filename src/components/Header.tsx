@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { scrollToSection, SECTION_IDS } from "@/lib/useScrollCamera";
-import { Music, VolumeX, Keyboard, Settings2, X } from "lucide-react";
+import {
+  Music,
+  VolumeX,
+  Keyboard,
+  Settings2,
+  X,
+  Navigation,
+} from "lucide-react";
 import { useAudioSettings } from "@/lib/AudioContext";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,6 +31,10 @@ export default function Header() {
     setTypingSoundEnabled,
     typingVolume,
     setTypingVolume,
+    travelSoundEnabled,
+    setTravelSoundEnabled,
+    travelVolume,
+    setTravelVolume,
   } = useAudioSettings();
   const [hidden, setHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -193,6 +204,42 @@ export default function Header() {
                       className="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green"
                     />
                   </div>
+
+                  {/* Travel Sound Control */}
+                  <div className="space-y-2 pt-2 border-t border-slate-700/50">
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={() =>
+                          setTravelSoundEnabled(!travelSoundEnabled)
+                        }
+                        className={`flex items-center gap-2 text-xs font-mono transition-colors ${travelSoundEnabled ? "text-green" : "text-slate-500"}`}
+                      >
+                        <Navigation
+                          className={`w-3.5 h-3.5 ${!travelSoundEnabled && "opacity-50"}`}
+                        />
+                        Travel
+                      </button>
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        {Math.round(travelVolume * 100)}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={travelSoundEnabled ? travelVolume : 0}
+                      onChange={(e) => {
+                        setTravelVolume(parseFloat(e.target.value));
+                        if (
+                          !travelSoundEnabled &&
+                          parseFloat(e.target.value) > 0
+                        )
+                          setTravelSoundEnabled(true);
+                      }}
+                      className="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green"
+                    />
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -330,6 +377,42 @@ export default function Header() {
                           parseFloat(e.target.value) > 0
                         )
                           setTypingSoundEnabled(true);
+                      }}
+                      className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green"
+                    />
+                  </div>
+
+                  {/* Travel Sound Control (Mobile) */}
+                  <div className="space-y-3 pt-5 border-t border-slate-700/50">
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={() =>
+                          setTravelSoundEnabled(!travelSoundEnabled)
+                        }
+                        className={`flex items-center gap-3 text-sm font-mono transition-colors ${travelSoundEnabled ? "text-green" : "text-slate-500"}`}
+                      >
+                        <Navigation
+                          className={`w-4 h-4 ${!travelSoundEnabled && "opacity-50"}`}
+                        />
+                        Travel
+                      </button>
+                      <span className="text-[10px] text-slate-500 font-mono bg-navy-900/50 px-2 py-1 rounded">
+                        {Math.round(travelVolume * 100)}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={travelSoundEnabled ? travelVolume : 0}
+                      onChange={(e) => {
+                        setTravelVolume(parseFloat(e.target.value));
+                        if (
+                          !travelSoundEnabled &&
+                          parseFloat(e.target.value) > 0
+                        )
+                          setTravelSoundEnabled(true);
                       }}
                       className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green"
                     />
