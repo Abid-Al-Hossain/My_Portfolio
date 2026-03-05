@@ -13,9 +13,13 @@ const projects = [
   {
     title: "Student Hall Management System",
     description:
-      "Admin panel for managing university halls. Handles student data, fees, and room allocation.",
-    tech: ["Next.js", "Node.js", "MongoDB", "Express"],
-    links: { github: "#", external: "#" },
+      "A modern RBAC portal for university halls. Features dynamic dashboards, persistent sessions, and a robust mock data engine.",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS"],
+    links: {
+      github:
+        "https://github.com/Abid-Al-Hossain/Hall_Management_System_Frontend_V2",
+      external: "https://hall-management-system-frontend-v2.vercel.app/",
+    },
   },
   {
     title: "Lettery",
