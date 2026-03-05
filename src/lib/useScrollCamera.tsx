@@ -32,7 +32,7 @@ const BASE_FOV = 60;
 const FOV_RANGE = 3;
 
 // Visibility config
-export const MAX_VISIBLE_DISTANCE = 20;
+export const MAX_VISIBLE_DISTANCE = 30; // Increased to 30 to provide overlap cross-fades and prevent "black space" between sections.
 
 // Scroll pacing — how much of each section's scroll budget is a deadzone vs transition
 const PAUSE_WEIGHT = 0.1; // 10% pause (subtle sticky feel)
@@ -250,7 +250,16 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
         rawProgress,
         SECTION_STOPS.length,
       );
-      setState({ cameraZ: currentZ.current, progress: snappedProgress });
+      // Only update state if significantly changed (saves React performance)
+      setState((prev) => {
+        if (
+          Math.abs(prev.cameraZ - currentZ.current) < 0.001 &&
+          Math.abs(prev.progress - snappedProgress) < 0.001
+        ) {
+          return prev;
+        }
+        return { cameraZ: currentZ.current, progress: snappedProgress };
+      });
       animRef.current = requestAnimationFrame(animate);
     };
 

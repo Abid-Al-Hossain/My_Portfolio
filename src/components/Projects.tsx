@@ -191,6 +191,8 @@ export default function Projects() {
                 <div className="flex gap-4">
                   <a
                     href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-slate-400 hover:text-green cursor-pointer"
                   >
                     <svg
@@ -203,6 +205,8 @@ export default function Projects() {
                   </a>
                   <a
                     href={project.links.external}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-slate-400 hover:text-green cursor-pointer"
                   >
                     <svg
