@@ -31,9 +31,12 @@ const projects = [
   {
     title: "Class Routine Management",
     description:
-      "Automated timetable generation and attendance tracking system with conflict-free scheduling.",
-    tech: ["React", "Node.js", "SQL"],
-    links: { github: "#", external: "#" },
+      "An intelligent Local-First academic portal with role-based dashboards and zero-backend latency. Features automated scheduling and real-time routine management.",
+    tech: ["React", "TypeScript", "Vite", "Zustand", "Framer Motion"],
+    links: {
+      github: "https://github.com/Abid-Al-Hossain/Class_Routine_Management_System_V2",
+      external: "https://class-routine-management-system-v2.vercel.app/",
+    },
   },
   {
     title: "ML Ensembles",
@@ -171,7 +174,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div
               key={project.title}
-              className="flex-shrink-0 w-[300px] md:w-[360px] snap-center bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] transition-all duration-700 group hover:scale-[1.02]"
+              className="flex-shrink-0 w-[300px] md:w-[360px] snap-center bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg border border-white/10 hover:border-green/60 hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] transition-all duration-700 group hover:scale-[1.02] flex flex-col"
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="flex justify-between items-start mb-4">
@@ -228,12 +231,14 @@ export default function Projects() {
               <h3 className="text-xl font-bold text-slate-200 mb-2 group-hover:text-green transition-colors">
                 {project.title}
               </h3>
-              <p className="text-slate-300 font-light text-base mb-4">
+              <p className="text-slate-300 font-light text-base mb-4 flex-1">
                 {project.description}
               </p>
-              <ul className="flex flex-wrap gap-2 text-sm font-light font-mono text-slate-400 mt-auto">
+              <ul className="flex flex-nowrap gap-3 text-xs font-light font-mono text-slate-400 mt-auto overflow-x-auto pb-1 no-scrollbar">
                 {project.tech.map((t) => (
-                  <li key={t}>{t}</li>
+                  <li key={t} className="whitespace-nowrap bg-navy-800/50 px-2 py-1 rounded border border-white/5">
+                    {t}
+                  </li>
                 ))}
               </ul>
             </div>
