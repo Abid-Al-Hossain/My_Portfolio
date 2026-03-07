@@ -45,6 +45,16 @@ const projects = [
     tech: ["Python", "XGBoost", "Pandas"],
     links: { github: "#", external: "#" },
   },
+  {
+    title: "Currency Converter",
+    description:
+      "A responsive, zero-framework currency converter. Features live exchange rate fetching, multi-currency comparison, and dynamic flag rendering.",
+    tech: ["HTML5", "CSS3", "Vanilla JS", "Currency API"],
+    links: {
+      github: "https://github.com/Abid-Al-Hossain/Currency_Converter",
+      external: "https://abid-al-hossain.github.io/Currency_Converter/",
+    },
+  },
 ];
 
 export default function Projects() {
