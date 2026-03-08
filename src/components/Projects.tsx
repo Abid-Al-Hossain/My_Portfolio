@@ -55,6 +55,16 @@ const projects = [
       external: "https://abid-al-hossain.github.io/Currency_Converter/",
     },
   },
+  {
+    title: "Rock Paper Scissor",
+    description:
+      "A classic browser game with keyboard controls and sound effects. Features random computer moves and live score tracking.",
+    tech: ["HTML5", "CSS3", "Vanilla JS"],
+    links: {
+      github: "https://github.com/Abid-Al-Hossain/Rock_Paper_Scissor",
+      external: "https://abid-al-hossain.github.io/Rock_Paper_Scissor/",
+    },
+  },
 ];
 
 export default function Projects() {
