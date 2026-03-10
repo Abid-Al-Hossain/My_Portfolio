@@ -39,11 +39,14 @@ const projects = [
     },
   },
   {
-    title: "ML Ensembles",
+    title: "Used Car Price Prediction",
     description:
-      "Predictive models for CKD and Car Prices using XGBoost, LightGBM, and CatBoost.",
-    tech: ["Python", "XGBoost", "Pandas"],
-    links: { github: "#", external: "#" },
+      "A machine learning-powered web application that predicts used car prices using an ensemble of CatBoost, XGBoost, and LightGBM with an ASP.NET Core frontend.",
+    tech: ["ASP.NET Core", "Python", "ML Ensemble", "Docker"],
+    links: {
+      github: "https://github.com/fbanabil/UsedCarPricePrediction",
+      external: "https://usedcarpriceprediction-1-jnvd.onrender.com/",
+    },
   },
   {
     title: "Currency Converter",
