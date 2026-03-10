@@ -61,6 +61,16 @@ const projects = [
       external: "https://abid-al-hossain.github.io/Rock_Paper_Scissor/",
     },
   },
+  {
+    title: "Lost and Found Web Portal",
+    description:
+      "A full-stack web application designed to reunite people with lost belongings. Features real-time communication, smart matching, and secure JWT authentication.",
+    tech: ["React", "ASP.NET Core", "EF Core", "SQL Server"],
+    links: {
+      github: "https://github.com/Abid-Al-Hossain/Lost_and_Found_Web_Portal_Synesis_IT",
+      external: "https://lostandfoundwebportal.netlify.app/",
+    },
+  },
 ];
 
 export default function Projects() {
