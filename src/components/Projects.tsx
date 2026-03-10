@@ -4,13 +4,6 @@ import { useRef, useState, useEffect } from "react";
 
 const projects = [
   {
-    title: "UI Foundry / UI Kit System",
-    description:
-      "A large reusable UI component library built for scalability. Features theme customization and accessibility.",
-    tech: ["React", "Typescript", "Tailwind CSS"],
-    links: { github: "#", external: "#" },
-  },
-  {
     title: "Student Hall Management System",
     description:
       "A modern RBAC portal for university halls. Features dynamic dashboards, persistent sessions, and a robust mock data engine.",
