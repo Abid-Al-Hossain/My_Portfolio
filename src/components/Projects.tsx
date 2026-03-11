@@ -15,11 +15,14 @@ const projects = [
     },
   },
   {
-    title: "Lettery",
+    title: "Letterly: Smart Word Suggestion App",
     description:
-      "Modern Android app built with Kotlin and XML following Material Design 3 guidelines.",
-    tech: ["Kotlin", "XML", "Material 3"],
-    links: { github: "#", external: "#" },
+      "A powerful Android dictionary and word-finding tool with 14 search modes. Powered by DataMuse API for real-time rhymes, synonyms, and pattern matching.",
+    tech: ["Kotlin", "Retrofit 2", "Coroutines", "Material Design"],
+    links: {
+      github: "https://github.com/Abid-Al-Hossain/Lettery_V2",
+      external: "https://github.com/Abid-Al-Hossain/Lettery_V2/releases/tag/v2.0.0",
+    },
   },
   {
     title: "Class Routine Management",
