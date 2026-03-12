@@ -13,6 +13,7 @@ const firaCode = Fira_Code({
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://my-portfolio-woad-alpha-94.vercel.app"),
   title: {
     default: "Swakkhar | Abid Al Hossain | Full Stack Developer Portfolio",
     template: "%s | Swakkhar Abid Al Hossain",
