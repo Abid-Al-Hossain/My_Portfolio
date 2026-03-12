@@ -24,11 +24,11 @@ export default function About() {
             <p>
               Fast-forward to today, and I&apos;ve had the privilege of building
               software for a{" "}
-              <span className="text-green">student management system</span>, a{" "}
-              <span className="text-green">large UI library</span>, and various
-              machine learning projects. My main focus these days is building
-              accessible, inclusive products and digital experiences for a
-              variety of clients.
+              <span className="text-green">student management system</span>, an{" "}
+              <span className="text-green">academic routine portal</span>, and a{" "}
+              <span className="text-green">lost &amp; found platform</span>. My
+              main focus these days is building high-performance, accessible
+              products and digital experiences for a variety of sectors.
             </p>
             <p>
               I also have a strong background in competitive programming and

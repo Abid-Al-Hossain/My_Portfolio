@@ -6,6 +6,7 @@ import {
   useScrollState,
   getSectionVisibility,
   SECTION_STOPS,
+  scrollToSection,
 } from "@/lib/useScrollCamera";
 
 export default function Hero() {
@@ -202,11 +203,8 @@ export default function Hero() {
 
       <div className="flex gap-4">
         <button
-          onClick={() => {
-            const el = document.getElementById("projects");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="px-6 py-4 rounded bg-transparent border border-green text-green font-mono text-sm hover:bg-green/10 transition-colors flex items-center gap-2 group"
+          onClick={() => scrollToSection(3)}
+          className="px-6 py-4 rounded bg-transparent border border-green text-green font-mono text-sm hover:bg-green/10 cursor-pointer transition-colors flex items-center gap-2 group"
         >
           Check out my work
           <svg
@@ -223,7 +221,7 @@ export default function Hero() {
             />
           </svg>
         </button>
-        <button className="px-6 py-4 rounded bg-green/10 text-green font-mono text-sm hover:bg-green/20 transition-colors flex items-center gap-2">
+        <button className="px-6 py-4 rounded bg-green/10 text-green font-mono text-sm hover:bg-green/20 cursor-pointer transition-colors flex items-center gap-2">
           <svg
             className="w-4 h-4"
             fill="none"
