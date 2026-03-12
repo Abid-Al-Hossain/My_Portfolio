@@ -221,7 +221,12 @@ export default function Hero() {
             />
           </svg>
         </button>
-        <button className="px-6 py-4 rounded bg-green/10 text-green font-mono text-sm hover:bg-green/20 cursor-pointer transition-colors flex items-center gap-2">
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-4 rounded bg-green/10 text-green font-mono text-sm hover:bg-green/20 cursor-pointer transition-colors flex items-center gap-2"
+        >
           <svg
             className="w-4 h-4"
             fill="none"
@@ -236,7 +241,7 @@ export default function Hero() {
             />
           </svg>
           Resume
-        </button>
+        </a>
       </div>
 
       {/* Scroll Indicator */}

@@ -247,6 +247,8 @@ export default function Header() {
 
           <a
             href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-4 py-2 border border-green text-green text-xs font-mono rounded hover:bg-green/10 transition-colors"
           >
             Resume
@@ -422,6 +424,8 @@ export default function Header() {
 
               <a
                 href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-6 px-10 py-3.5 w-full max-w-[280px] text-center border border-green text-green font-mono uppercase tracking-widest text-sm rounded hover:bg-green hover:text-navy-900 transition-all duration-300"
               >
                 Resume
