@@ -9,6 +9,11 @@ import {
   scrollToSection,
 } from "@/lib/useScrollCamera";
 
+type WebkitAudioWindow = Window &
+  typeof globalThis & {
+    webkitAudioContext?: typeof AudioContext;
+  };
+
 export default function Hero() {
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");
@@ -70,7 +75,8 @@ export default function Hero() {
     const initAudio = async () => {
       try {
         const AudioContextClass =
-          window.AudioContext || (window as any).webkitAudioContext;
+          window.AudioContext ||
+          (window as WebkitAudioWindow).webkitAudioContext;
         if (!AudioContextClass) return;
 
         if (!audioCtxRef.current) {

@@ -137,6 +137,7 @@ export default function Skills() {
         {!isAtStart && (
           <button
             onClick={() => scrollTo(activeIndex - 1)}
+            aria-label="Previous skill category"
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-navy-700/80 border border-white/10 text-slate-300 hover:text-green hover:border-green/40 transition-all duration-300 backdrop-blur-sm"
           >
             <svg
@@ -159,6 +160,7 @@ export default function Skills() {
         {!isAtEnd && skills.length > 1 && (
           <button
             onClick={() => scrollTo(activeIndex + 1)}
+            aria-label="Next skill category"
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-navy-700/80 border border-white/10 text-slate-300 hover:text-green hover:border-green/40 transition-all duration-300 backdrop-blur-sm"
           >
             <svg
@@ -187,7 +189,7 @@ export default function Skills() {
             scrollBehavior: "smooth",
           }}
         >
-          {skills.map((skillGroup, i) => (
+          {skills.map((skillGroup) => (
             <div
               key={skillGroup.category}
               className="flex-shrink-0 w-[280px] md:w-[320px] snap-center bg-navy-700/60 backdrop-blur-xl p-6 rounded-lg hover:shadow-[0_0_30px_rgba(100,255,218,0.2)] hover:scale-[1.02] transition-all duration-700 border border-white/10 hover:border-green/40 group"
@@ -219,6 +221,7 @@ export default function Skills() {
           <button
             key={i}
             onClick={() => scrollTo(i)}
+            aria-label={`Go to ${skills[i].category} skills`}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               i === activeIndex
                 ? "bg-green w-6"

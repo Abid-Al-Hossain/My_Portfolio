@@ -149,6 +149,7 @@ export default function Projects() {
         {!isAtStart && (
           <button
             onClick={() => scrollTo(activeIndex - 1)}
+            aria-label="Previous project"
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-navy-700/80 border border-white/10 text-slate-300 hover:text-green hover:border-green/40 transition-all duration-300 backdrop-blur-sm"
           >
             <svg
@@ -171,6 +172,7 @@ export default function Projects() {
         {!isAtEnd && projects.length > 1 && (
           <button
             onClick={() => scrollTo(activeIndex + 1)}
+            aria-label="Next project"
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-navy-700/80 border border-white/10 text-slate-300 hover:text-green hover:border-green/40 transition-all duration-300 backdrop-blur-sm"
           >
             <svg
@@ -225,6 +227,7 @@ export default function Projects() {
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open ${project.title} GitHub repository`}
                     className="text-slate-400 hover:text-green cursor-pointer"
                   >
                     <svg
@@ -239,6 +242,7 @@ export default function Projects() {
                     href={project.links.external}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open ${project.title} live project`}
                     className="text-slate-400 hover:text-green cursor-pointer"
                   >
                     <svg
@@ -281,6 +285,7 @@ export default function Projects() {
           <button
             key={i}
             onClick={() => scrollTo(i)}
+            aria-label={`Go to project ${i + 1}`}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               i === activeIndex
                 ? "bg-green w-6"

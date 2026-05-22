@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useScrollState } from "@/lib/useScrollCamera";
@@ -10,6 +10,11 @@ interface ShootingStarProps {
   speed?: number;
 }
 
+// Widened significantly to ensure off-screen spawn/despawn.
+const VIEW_WIDTH = 160;
+const VIEW_HEIGHT = 100;
+const RELATIVE_DEPTH = -60; // Distance in front of camera
+
 export default function ShootingStar({
   delayRange = [5000, 7000],
   speed = 0.4, // Reduced default speed
@@ -17,16 +22,12 @@ export default function ShootingStar({
   const groupRef = useRef<THREE.Group>(null);
   const { cameraZ } = useScrollState();
   const [active, setActive] = useState(false);
-  const [startPos, setStartPos] = useState(new THREE.Vector3());
-  const [endPos, setEndPos] = useState(new THREE.Vector3());
-  const [progress, setProgress] = useState(0);
+  const startPosRef = useRef(new THREE.Vector3());
+  const endPosRef = useRef(new THREE.Vector3());
+  const progressRef = useRef(0);
+  const lookAtRef = useRef(new THREE.Vector3());
 
-  // Constants for randomness - widened significantly to ensure off-screen spawn/despawn
-  const VIEW_WIDTH = 160;
-  const VIEW_HEIGHT = 100;
-  const RELATIVE_DEPTH = -60; // Distance in front of camera
-
-  const spawn = () => {
+  const spawn = useCallback(() => {
     // Randomize trajectory to travel the WHOLE path
     // Start from one of the edges (Top, Left, Right)
     const side = Math.floor(Math.random() * 3);
@@ -60,50 +61,49 @@ export default function ShootingStar({
 
     const spawnZ = cameraZ + RELATIVE_DEPTH;
 
-    setStartPos(new THREE.Vector3(x1, y1, spawnZ));
-    setEndPos(new THREE.Vector3(x2, y2, spawnZ));
-    setProgress(0);
+    startPosRef.current.set(x1, y1, spawnZ);
+    endPosRef.current.set(x2, y2, spawnZ);
+    progressRef.current = 0;
     setActive(true);
-  };
+  }, [cameraZ]);
 
   useEffect(() => {
     if (active) return;
 
+    const [minDelay, maxDelay] = delayRange;
     const delay =
-      delayRange[0] + Math.random() * (delayRange[1] - delayRange[0]);
+      minDelay + Math.random() * (maxDelay - minDelay);
     const timeout = setTimeout(spawn, delay);
     return () => clearTimeout(timeout);
-  }, [active, delayRange]);
+  }, [active, delayRange, spawn]);
 
   useFrame((state, delta) => {
     if (!active) return;
 
-    const newProgress = progress + delta * speed;
+    const newProgress = progressRef.current + delta * speed;
     if (newProgress >= 1) {
       setActive(false);
-      setProgress(0);
+      progressRef.current = 0;
     } else {
-      setProgress(newProgress);
+      progressRef.current = newProgress;
       if (groupRef.current) {
         // Dynamic Depth Sync: Update Z to follow camera continuously
         const currentZ = cameraZ + RELATIVE_DEPTH;
-        startPos.z = currentZ;
-        endPos.z = currentZ;
+        startPosRef.current.z = currentZ;
+        endPosRef.current.z = currentZ;
 
-        groupRef.current.position.lerpVectors(startPos, endPos, newProgress);
+        groupRef.current.position.lerpVectors(
+          startPosRef.current,
+          endPosRef.current,
+          newProgress,
+        );
 
         // Re-calculate lookAt targets to ensure orientation remains correct as Z shifts
-        const targetLook = endPos.clone();
-        groupRef.current.lookAt(targetLook);
+        lookAtRef.current.copy(endPosRef.current);
+        groupRef.current.lookAt(lookAtRef.current);
       }
     }
   });
-
-  // Visuals: Head + Fading Trail
-  const trailGeometry = useMemo(
-    () => new THREE.CylinderGeometry(0.02, 0, 5, 8),
-    [],
-  );
 
   if (!active) return null;
 

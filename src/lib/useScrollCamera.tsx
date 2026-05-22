@@ -28,15 +28,15 @@ const TOTAL_Z = Math.abs(Z_END - Z_START);
 
 // Camera config
 const LERP_FACTOR = 0.06;
-const BASE_FOV = 60;
-const FOV_RANGE = 3;
 
 // Visibility config
 export const MAX_VISIBLE_DISTANCE = 30; // Increased to 30 to provide overlap cross-fades and prevent "black space" between sections.
 
-// Scroll pacing — how much of each section's scroll budget is a deadzone vs transition
-const PAUSE_WEIGHT = 0.1; // 10% pause (subtle sticky feel)
-const TRANSITION_WEIGHT = 0.9; // 90% smooth movement between sections
+// Scroll pacing - how much of each section's scroll budget is a deadzone vs transition.
+// The pause needs enough runway that wheel/touchpad gestures do not skip focused sections.
+const PAUSE_WEIGHT = 0.45;
+const TRANSITION_WEIGHT = 0.8;
+const SCROLL_HEIGHT_MULTIPLIER = 1.85;
 
 /**
  * Maps linear scroll progress [0, 1] into a stepped progress with plateaus
@@ -94,8 +94,8 @@ export function useScrollState() {
 }
 
 export function getScrollHeight(): number {
-  // Multiply by 1.5 to provide extra scroll room for the deadzones
-  return SECTION_STOPS.length * window.innerHeight * 1.5;
+  // Extra scroll room gives each focused section a stable sticky plateau.
+  return SECTION_STOPS.length * window.innerHeight * SCROLL_HEIGHT_MULTIPLIER;
 }
 
 export function scrollToSection(index: number): void {

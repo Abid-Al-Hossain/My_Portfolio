@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable react-hooks/immutability -- React Three Fiber expects imperative camera updates inside effects and useFrame. */
+
 import { useRef, useEffect, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -13,7 +15,6 @@ import {
 const Z_START = SECTION_STOPS[0];
 const Z_END = SECTION_STOPS[SECTION_STOPS.length - 1];
 const TOTAL_Z = Math.abs(Z_END - Z_START);
-const LERP_FACTOR = 0.06; // used only as local fallback
 const BASE_FOV = 60;
 const FOV_RANGE = 3;
 

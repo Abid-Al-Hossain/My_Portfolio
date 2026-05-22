@@ -15,7 +15,7 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
-    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    var(--font-fira-code), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
@@ -58,5 +58,16 @@
 
 /* Hide scrollbar for horizontal carousels */
 .overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide,
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }

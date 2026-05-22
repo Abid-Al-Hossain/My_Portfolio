@@ -43,6 +43,7 @@ export default function About() {
               src="/avatar.jpeg"
               alt="Swakkhar (Abid Al Hossain) - Full Stack Developer and Creative Engineer Portfolio"
               fill
+              sizes="(min-width: 768px) 320px, 256px"
               className="object-cover transition-all duration-700 pointer-events-none group-hover:scale-110"
             />
           </div>

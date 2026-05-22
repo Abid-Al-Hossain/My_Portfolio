@@ -26,6 +26,7 @@ export default function Contact() {
             href="https://github.com/Abid-Al-Hossain"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Open GitHub profile"
             className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -36,6 +37,7 @@ export default function Contact() {
             href="https://www.linkedin.com/in/abid-ahmed-5a1385234/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Open LinkedIn profile"
             className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -46,6 +48,7 @@ export default function Contact() {
             href="https://www.facebook.com/swakkhar.abid"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Open Facebook profile"
             className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -56,6 +59,7 @@ export default function Contact() {
             href="https://www.instagram.com/procchod123/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Open Instagram profile"
             className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -64,6 +68,7 @@ export default function Contact() {
           </a>
           <a
             href="mailto:aabid.al.hossain@gmail.com"
+            aria-label="Send email"
             className="text-slate-400 hover:text-green hover:scale-110 transition-transform duration-500 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.8)]"
           >
             <svg

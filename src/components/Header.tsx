@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { scrollToSection, SECTION_IDS } from "@/lib/useScrollCamera";
+import { scrollToSection } from "@/lib/useScrollCamera";
 import {
   Music,
   VolumeX,
@@ -109,6 +109,8 @@ export default function Header() {
           <div className="relative ml-4 pl-6 border-l border-slate-700">
             <button
               onClick={() => setIsAudioMenuOpen(!isAudioMenuOpen)}
+              aria-label="Open audio settings"
+              aria-expanded={isAudioMenuOpen}
               className={`flex items-center justify-center p-2 rounded-full transition-all ${isAudioMenuOpen || bgSoundEnabled ? "text-green bg-green/10" : "text-slate-400 hover:text-green hover:bg-slate-800"}`}
               title="Audio Settings"
             >
@@ -130,6 +132,7 @@ export default function Header() {
                     </span>
                     <button
                       onClick={() => setIsAudioMenuOpen(false)}
+                      aria-label="Close audio settings"
                       className="text-slate-500 hover:text-slate-300"
                     >
                       <X className="w-4 h-4" />
@@ -259,6 +262,8 @@ export default function Header() {
         <button
           className="md:hidden text-green z-50"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isOpen}
         >
           {isOpen ? (
             <svg

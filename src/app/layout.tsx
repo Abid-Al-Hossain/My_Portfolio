@@ -71,10 +71,10 @@ export const metadata: Metadata = {
     siteName: "Swakkhar Portfolio",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Swakkhar Portfolio Preview",
+        url: "/avatar.jpeg",
+        width: 1280,
+        height: 960,
+        alt: "Swakkhar portfolio profile preview",
       },
     ],
   },
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     title: "Swakkhar | Full Stack Developer",
     description:
       "Modern web portfolio and showcase of technical excellence by Swakkhar.",
-    images: ["/og-image.png"],
+    images: ["/avatar.jpeg"],
     creator: "@swakkhar",
   },
   robots: {

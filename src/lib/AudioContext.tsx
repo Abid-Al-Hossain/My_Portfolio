@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable react-hooks/set-state-in-effect -- Audio preferences are intentionally hydrated from localStorage after mount to keep SSR markup stable. */
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface AudioContextType {

@@ -11,7 +11,7 @@ export default function BackgroundAudio() {
     // Initialize audio object once on mount
     const audio = new Audio("/audio/bg_compressed.mp3");
     audio.loop = true;
-    audio.volume = bgVolume;
+    audio.volume = 0.35;
     audioRef.current = audio;
 
     return () => {
