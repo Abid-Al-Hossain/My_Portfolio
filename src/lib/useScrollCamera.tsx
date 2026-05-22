@@ -34,9 +34,9 @@ export const MAX_VISIBLE_DISTANCE = 30; // Increased to 30 to provide overlap cr
 
 // Scroll pacing - how much of each section's scroll budget is a deadzone vs transition.
 // The pause needs enough runway that wheel/touchpad gestures do not skip focused sections.
-const PAUSE_WEIGHT = 0.45;
-const TRANSITION_WEIGHT = 0.8;
-const SCROLL_HEIGHT_MULTIPLIER = 1.85;
+const PAUSE_WEIGHT = 0.28;
+const TRANSITION_WEIGHT = 0.85;
+const SCROLL_HEIGHT_MULTIPLIER = 1.7;
 
 /**
  * Maps linear scroll progress [0, 1] into a stepped progress with plateaus
@@ -110,7 +110,8 @@ export function scrollToSection(index: number): void {
   const pauseStartWeight = index * (PAUSE_WEIGHT + TRANSITION_WEIGHT);
   const targetWeight = pauseStartWeight + PAUSE_WEIGHT / 2;
 
-  const targetProgress = targetWeight / totalWeight;
+  const isLastSection = index === numSections - 1;
+  const targetProgress = isLastSection ? 1 : targetWeight / totalWeight;
   // Explicitly force absolute 0 for the Hero section so we hit the exact top
   // of the HTML document, triggering a full runway approach animation.
   const targetScroll = index === 0 ? 0 : targetProgress * scrollHeight;
