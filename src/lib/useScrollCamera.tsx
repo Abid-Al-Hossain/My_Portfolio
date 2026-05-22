@@ -33,10 +33,34 @@ const LERP_FACTOR = 0.06;
 export const MAX_VISIBLE_DISTANCE = 30; // Increased to 30 to provide overlap cross-fades and prevent "black space" between sections.
 
 // Scroll pacing - how much of each section's scroll budget is a deadzone vs transition.
-// The pause needs enough runway that wheel/touchpad gestures do not skip focused sections.
+// Keep the physical scroll runway scaled with these weights so the final sections
+// do not get compressed into blended intermediate states.
+const BASE_PAUSE_WEIGHT = 0.1;
+const BASE_TRANSITION_WEIGHT = 0.9;
+const BASE_SCROLL_HEIGHT_MULTIPLIER = 1.5;
+const SCROLL_RUNWAY_SCALE = 1.15;
 const PAUSE_WEIGHT = 0.28;
 const TRANSITION_WEIGHT = 0.85;
-const SCROLL_HEIGHT_MULTIPLIER = 1.7;
+
+const getTotalWeight = (
+  numSections: number,
+  pauseWeight = PAUSE_WEIGHT,
+  transitionWeight = TRANSITION_WEIGHT,
+) => numSections * pauseWeight + (numSections - 1) * transitionWeight;
+
+const getScrollHeightMultiplier = (numSections: number) => {
+  const baseWeight = getTotalWeight(
+    numSections,
+    BASE_PAUSE_WEIGHT,
+    BASE_TRANSITION_WEIGHT,
+  );
+  const currentWeight = getTotalWeight(numSections);
+  return (
+    BASE_SCROLL_HEIGHT_MULTIPLIER *
+    (currentWeight / baseWeight) *
+    SCROLL_RUNWAY_SCALE
+  );
+};
 
 /**
  * Maps linear scroll progress [0, 1] into a stepped progress with plateaus
@@ -49,8 +73,7 @@ export function applyScrollSnapping(
 ): number {
   if (numSections <= 1) return progress;
 
-  const totalWeight =
-    numSections * PAUSE_WEIGHT + (numSections - 1) * TRANSITION_WEIGHT;
+  const totalWeight = getTotalWeight(numSections);
   const currentWeight = progress * totalWeight;
 
   let accumulatedWeight = 0;
@@ -95,7 +118,11 @@ export function useScrollState() {
 
 export function getScrollHeight(): number {
   // Extra scroll room gives each focused section a stable sticky plateau.
-  return SECTION_STOPS.length * window.innerHeight * SCROLL_HEIGHT_MULTIPLIER;
+  return (
+    SECTION_STOPS.length *
+    window.innerHeight *
+    getScrollHeightMultiplier(SECTION_STOPS.length)
+  );
 }
 
 export function scrollToSection(index: number): void {
@@ -103,8 +130,7 @@ export function scrollToSection(index: number): void {
   const numSections = SECTION_STOPS.length;
   if (numSections <= 1) return;
 
-  const totalWeight =
-    numSections * PAUSE_WEIGHT + (numSections - 1) * TRANSITION_WEIGHT;
+  const totalWeight = getTotalWeight(numSections);
 
   // Target the middle of the pause phase for this section
   const pauseStartWeight = index * (PAUSE_WEIGHT + TRANSITION_WEIGHT);
