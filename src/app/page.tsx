@@ -8,25 +8,16 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import ProductsSection from "@/components/ProductsSection";
 import Career from "@/components/Career";
 import Contact from "@/components/Contact";
 import {
   ScrollProvider,
-  getScrollHeight,
   SECTION_IDS,
+  SCROLL_SPACER_HEIGHT,
 } from "@/lib/useScrollCamera";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [scrollHeight, setScrollHeight] = useState(3600);
-
-  useEffect(() => {
-    const update = () => setScrollHeight(getScrollHeight());
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   return (
     <ScrollProvider>
       <Header />
@@ -48,16 +39,23 @@ export default function Home() {
         <Projects />
       </SectionPortal>
       <SectionPortal sectionIndex={4} id={SECTION_IDS[4]}>
-        <Career />
+        <ProductsSection />
       </SectionPortal>
       <SectionPortal sectionIndex={5} id={SECTION_IDS[5]}>
+        <Career />
+      </SectionPortal>
+      <SectionPortal sectionIndex={6} id={SECTION_IDS[6]}>
         <Contact />
       </SectionPortal>
 
       {/* Scroll spacer */}
       <div
         className="scroll-spacer"
-        style={{ height: `${scrollHeight}px`, position: "relative", zIndex: 0 }}
+        style={{
+          height: SCROLL_SPACER_HEIGHT,
+          position: "relative",
+          zIndex: 0,
+        }}
       />
 
       <Footer />

@@ -1,6 +1,6 @@
 # Swakkhar Portfolio
 
-A cinematic personal portfolio built with Next.js, React, Tailwind CSS, Framer Motion, and React Three Fiber. The site uses a custom scroll-driven 3D camera system, layered fixed sections, interactive audio controls, and project/career/contact sections for Swakkhar (Abid Al Hossain).
+A cinematic personal portfolio built with Next.js, React, Tailwind CSS, Framer Motion, and React Three Fiber. The site uses a custom scroll-driven 3D camera system, layered fixed sections, interactive audio controls, project/product/career/contact sections, and a dedicated Chronos product showcase for Swakkhar (Abid Al Hossain).
 
 ## Local Development
 
@@ -42,5 +42,6 @@ npm audit
 
 - Public resume and avatar assets live in `public/`.
 - Audio assets live in `public/audio/`.
-- The scroll experience is controlled by `src/lib/useScrollCamera.tsx` and `src/lib/CameraRig.ts`.
+- The scroll experience and refresh restoration are controlled by `src/lib/useScrollCamera.tsx` and `src/lib/CameraRig.ts`.
+- Product purchase/demo content is implemented in `src/components/ProductsSection.tsx`.
 - SEO metadata is configured in `src/app/layout.tsx`, with sitemap output from `src/app/sitemap.ts`.

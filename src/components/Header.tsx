@@ -17,8 +17,9 @@ const navLinks = [
   { name: "About", index: 1 },
   { name: "Skills", index: 2 },
   { name: "Projects", index: 3 },
-  { name: "Career", index: 4 },
-  { name: "Contact", index: 5 },
+  { name: "Products", index: 4 },
+  { name: "Career", index: 5 },
+  { name: "Contact", index: 6 },
 ];
 
 export default function Header() {
@@ -93,7 +94,7 @@ export default function Header() {
         </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 items-center">
+        <ul className="hidden md:flex gap-6 lg:gap-8 items-center">
           {navLinks.map((link) => (
             <li key={link.name}>
               <button

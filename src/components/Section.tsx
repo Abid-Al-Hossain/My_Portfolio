@@ -18,7 +18,7 @@ export default function SectionPortal({
   sectionIndex,
   id,
 }: SectionPortalProps) {
-  const { cameraZ } = useScrollState();
+  const { cameraZ, isReady } = useScrollState();
   const containerRef = useRef<HTMLDivElement>(null);
   const zPosition = SECTION_STOPS[sectionIndex];
 
@@ -26,6 +26,13 @@ export default function SectionPortal({
 
   useEffect(() => {
     if (!containerRef.current) return;
+    if (!isReady) {
+      containerRef.current.style.opacity = "0";
+      containerRef.current.style.pointerEvents = "none";
+      containerRef.current.style.visibility = "hidden";
+      return;
+    }
+
     const { scale, opacity, visible } = getSectionVisibility(
       cameraZ,
       zPosition,
@@ -50,7 +57,7 @@ export default function SectionPortal({
 
     // Remember visibility state for next frame
     prevVisibleRef.current = visible;
-  }, [cameraZ, zPosition]);
+  }, [cameraZ, isReady, zPosition]);
 
   return (
     <div
