@@ -32,14 +32,10 @@ const LERP_FACTOR = 0.06;
 // Visibility config
 export const MAX_VISIBLE_DISTANCE = 30; // Increased to 30 to provide overlap cross-fades and prevent "black space" between sections.
 
-// Scroll pacing - how much of each section's scroll budget is a deadzone vs transition.
-// Keep the physical scroll runway scaled with these weights so the final sections
-// do not get compressed into blended intermediate states.
-const BASE_PAUSE_WEIGHT = 0.1;
-const BASE_TRANSITION_WEIGHT = 0.9;
+// Scroll pacing - keep the total runway unchanged, but allocate more of it to
+// each section's pause phase so sections feel stickier without slowing the page.
 const BASE_SCROLL_HEIGHT_MULTIPLIER = 1.5;
-const SCROLL_RUNWAY_SCALE = 1.15;
-const PAUSE_WEIGHT = 0.28;
+const PAUSE_WEIGHT = 0.26;
 const TRANSITION_WEIGHT = 0.85;
 
 const getTotalWeight = (
@@ -47,20 +43,6 @@ const getTotalWeight = (
   pauseWeight = PAUSE_WEIGHT,
   transitionWeight = TRANSITION_WEIGHT,
 ) => numSections * pauseWeight + (numSections - 1) * transitionWeight;
-
-const getScrollHeightMultiplier = (numSections: number) => {
-  const baseWeight = getTotalWeight(
-    numSections,
-    BASE_PAUSE_WEIGHT,
-    BASE_TRANSITION_WEIGHT,
-  );
-  const currentWeight = getTotalWeight(numSections);
-  return (
-    BASE_SCROLL_HEIGHT_MULTIPLIER *
-    (currentWeight / baseWeight) *
-    SCROLL_RUNWAY_SCALE
-  );
-};
 
 /**
  * Maps linear scroll progress [0, 1] into a stepped progress with plateaus
@@ -117,12 +99,7 @@ export function useScrollState() {
 }
 
 export function getScrollHeight(): number {
-  // Extra scroll room gives each focused section a stable sticky plateau.
-  return (
-    SECTION_STOPS.length *
-    window.innerHeight *
-    getScrollHeightMultiplier(SECTION_STOPS.length)
-  );
+  return SECTION_STOPS.length * window.innerHeight * BASE_SCROLL_HEIGHT_MULTIPLIER;
 }
 
 export function scrollToSection(index: number): void {
